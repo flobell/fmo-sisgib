@@ -1,0 +1,37 @@
+<br>
+<br>
+<h1 style="text-align: center">ELIMINAR CUENTA DÉBITO</h1>    <br><br>
+<fieldset>
+        <legend style="font-size: 15px; margin-bottom: -10px;margin-left: 8px ;width: auto;">Eliminar Cuenta Débito</legend>
+        <br><br>
+<table class="general" summary="Proveedores" style="width:30%">
+<caption>¿Seguro que desea eliminar?</caption>
+<tbody>
+<tr>
+    <th align="center" width="45%">Numero de Cuenta:</th>
+    <td align="center"><?php echo $this->escape($this->cuentasfmo->numcuenta); ?></td>
+</tr>
+<tr>
+    <th align="center">RIF:</th>
+    <td align="center"><?php echo $this->escape($this->cuentasfmo->rif); ?></td>
+</tr>
+<tr>
+    <th align="center">Razón Social:</th>
+    <td align="center"><?php echo $this->escape($this->cuentasfmo->razon); ?></td>   
+</tr>
+<tr>
+    <th align="center">Banco:</th>
+    <td align="center"><?php echo $this->escape($this->cuentasfmo->banco); ?></td>
+</tr>    
+<tr>
+    <th align="center">Tipo de Cuenta:</th>
+    <td align="center"><?php echo $this->escape($this->cuentasfmo->tipocuenta); ?></td>
+</tr>    
+    
+</table>
+<p align="center">
+    <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'cuentasfmo', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+    <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'cuentasfmo', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'numcuenta' => $this->cuentasfmo->numcuenta), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>
+</p>
+
+</fieldset>

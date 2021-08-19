@@ -1,0 +1,60 @@
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+<br>
+<br>
+<h1 style="text-align: center">LISTADO DE ENTIDADES BANCARIAS</h1>     
+
+   
+<fieldset><br>
+    <table class="general" summary="Listado de Cuentas FMO">
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Listado de Entidades Bancarias</legend>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>BCV</th>
+                <th>Swift</th>  
+                <th>Estado</th>
+                <th width="10%" colspan="2">Acción</th>
+            </tr>
+        </thead>
+    <tbody>
+<?php
+
+if ($this->bancos and $this->bancos->count()):
+    foreach ($this->bancos as $fila): ?>
+        <tr>
+           
+            <td align="center"><?php echo $fila->codigo; ?></td>
+            <td align="center"><?php echo $fila->nombre_banco; ?></td>
+            <td align="center"><?php echo $fila->bcv; ?></td>
+            <td align="center"><?php echo $fila->swift; ?></td>
+            <td align="center"><?php if($fila->activo){ echo "Habilitado"; } else{ echo "Deshabilitado"; }?> </td>
+            
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'editar', 'codigo' => $fila->codigo)); ?>" title="Editar"><?php echo $this->img('ico_editar.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'eliminar', 'codigo' => $fila->codigo)); ?>" title="Eliminar"><?php echo $this->img('ico_eliminar.png'); ?></a></td>
+        </tr>
+    <?php
+        endforeach;
+    else: ?>
+            <tr>
+                <td colspan="10" align="center">La consulta no devolvió registros</td>
+            </tr>
+    <?php
+    endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->bancos):
+       //Zend_Debug::dd($clientes);
+        echo $this->paginationControl($this->bancos);
+    endif;
+    ?>
+ </fieldset>
+ <br>
+ <br>
+ <br>
+ <br>

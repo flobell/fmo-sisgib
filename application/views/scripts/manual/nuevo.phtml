@@ -1,0 +1,39 @@
+<br>
+<br>
+<h1 style="text-align: center">AYUDA AL USUARIO</h1>
+
+
+<?php //echo $this->formulario->renderForm(false); ?>
+
+
+ <!-- ENDITADES BANCARIAS -->   
+ 
+<fieldset>             
+    <h3 align="center">Al seleccionar <?php echo $this->img('ico_archivo_pdf.png'); ?> el manual se abrirá en una nueva pestaña</h3>
+    <table class="general" summary="Datos Bancarios " style="width:45%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Manuales Disponibles</legend>
+        <tbody>
+            <tr>
+                <th>Manual De Usuario</th><br>
+                <th>Manual Del Sistema</th>
+                <th>Estructuras <br> TXT</th>
+                <th>Estructura <br> Hoja de Calculo</th>
+            </tr>
+            <tr>
+                <td width="25%" align="center"><a href="<?php echo $this->baseUrl('public/MANUAL DE USUARIO SISGIB en pdf v2.pdf'); ?>" target="_blank" title="Descargar Manual de Usuario"><?php echo $this->img('ico_archivo_pdf.png'); ?></a></td><br>
+                <td width="25%" align="center"><a href="<?php echo $this->baseUrl('public/Proyecto Manual de Sistema SISGIB en PDF.pdf'); ?>" target="_blank" title="Descargar Manual del Sistema"><?php echo $this->img('ico_archivo_pdf.png'); ?></a></td><br>
+                <td width="25%" align="center"><a href="<?php echo $this->baseUrl('public/Estructuras TXT.pdf'); ?>" target="_blank" title="Descargar Estructuras TXT"><?php echo $this->img('ico_archivo_pdf.png'); ?></a></td><br>
+                <td width="25%" align="center"><a href="<?php echo $this->baseUrl('public/ESTRUCTURA ESTANDAR.xls'); ?>" target="_blank" title="Descargar Hoja de Calculo Estandar para carga en todos los bancos y el modulos Patria"><?php echo $this->img('ico_descargar3.png'); ?></a></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    
+</fieldset><br><br><br>
+    
+
+<?php echo '</form>', PHP_EOL; ?>
+
+

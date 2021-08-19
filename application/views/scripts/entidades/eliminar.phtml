@@ -1,0 +1,34 @@
+<br>
+<br>
+<h1 style="text-align: center">ELIMINAR ENTIDAD BANCARIA</h1>     
+
+<fieldset>
+    <legend style="font-size: 15px; margin-bottom: -10px;margin-left: 8px ;width: auto;">Eliminar Entidad Bancaria</legend>
+    <br><br>
+
+    <table class="general" summary="Proveedores" style="width:30%">
+    <caption>¿Seguro que desea eliminar?</caption>
+    <tbody>
+    <tr>
+        <th align="center" width="20%">Código:</th>
+        <td align="center"><?php echo $this->escape($this->entidades->codigo); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Nombre:</th>
+        <td align="center"><?php echo $this->escape($this->entidades->nombre_banco); ?></td>
+    </tr>
+    <tr>
+        <th align="center">BCV:</th>
+        <td align="center"><?php echo $this->escape($this->entidades->bcv); ?></td>   
+    </tr>
+    <tr>
+        <th align="center">Swift:</th>
+        <td align="center"><?php echo $this->escape($this->entidades->swift); ?></td>
+    </tr>      
+
+    </table>
+    <p align="center">
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'entidades', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'entidades', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'codigo' => $this->entidades->codigo), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>
+    </p>
+</fieldset>

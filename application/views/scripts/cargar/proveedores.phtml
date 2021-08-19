@@ -1,0 +1,358 @@
+
+
+<br>
+<br>
+<h1 style="text-align: center">REGISTRO INDIVIDUAL DE PROVEEDORES</h1>
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+
+
+<style>
+    #modal {
+    display: none;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 64px;
+    height: 64px;
+    padding: 2.5% 2.5%;
+    border: 3px solid #ababab;
+    box-shadow:1px 1px 10px #ababab;
+    border-radius:20px;
+    background-color: white;
+    z-index: 1002;
+    text-align:center;
+    overflow: auto;
+    }
+</style>
+
+<div id="modal">
+    <?php echo $this->img('spinner.gif', array('alt' => 'spinner.gif', 'width' => '64', 'height' => '64')); ?>
+</div>
+
+ <!-- ENDITADES BANCARIAS -->   
+ 
+<fieldset>             
+    <table class="general" summary="Información de Interfaz" style="width:30%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Información de Interfaz</legend>
+        <tbody>  
+            <tr>
+                <th>Entidad Bancaria</th>
+                <td style="width: 5%"><?php
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_COD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_COD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_COD)->renderErrors();
+                         ?>
+                </td>   
+            </tr>
+            
+            <tr>
+                <th style="width: 40%">Titulo de Interfaz</th>
+                <td><?php 
+                   echo $this->formulario->getElement(Application_Form_CargarProveedores::E_TITULO)->renderViewHelper(),
+                        $this->formulario->getElement(Application_Form_CargarProveedores::E_TITULO)->renderDescription(),
+                        $this->formulario->getElement(Application_Form_CargarProveedores::E_TITULO)->renderErrors(); 
+                        ?>
+                </td>
+                <?php echo $this->formulario->getElement(Application_Form_CargarProveedores::E_FECHA)->renderViewHelper();?>
+             </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+ </fieldset>
+
+ <br>
+ <br>
+
+ <!-- DATOS DE INTERFAZ CON TABLA PROVEEDORES -->
+ <fieldset id="target1">
+         
+     <table id="tblMonto" class="general" summary="Monto total" style="width: 20%">
+        <tr >
+            <th class="td-titulo" colspan="4" style="width: 40%">Monto Total</th>
+            <td align="center" >
+                <input name="monto" id="montoText" value="0" size="12" maxlength="3" readonly="readonly" type="text" style="text-align: right;"></input>
+            </td>
+        </tr>
+    </table>
+     
+     <table id="tblProveedores" class="general" summary="Datos de Interfaz" style="width:55%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Datos de Interfaz</legend>
+        <caption style="text-align: left">
+            Datos de Proveedores
+            <a title="Agregar Proveedor" href="javascript: void(0);" onclick="agregarFilaProveedores(this)"><?php echo $this->img('ico_agregar.png');?></a>
+            <a title="Eliminar Proveedor" href="javascript:void(0);" onclick="quitarFilaProveedores(this)"><?php echo $this->img('ico_eliminar.png');?></a>
+        </caption>
+        <thead>  
+            <tr><br>
+                <th class="td-titulo">N°</th>
+                <th class="td-titulo">C.I/R.I.F</th>
+                <th class="td-titulo">Nac.</th>
+                <th class="td-titulo">Razón Social</th>
+                <th class="td-titulo">Rep.Legal</th>
+                <th class="td-titulo">No.Cuenta</th>
+                <th class="td-titulo">Tipo de Cuenta</th>
+                <th class="td-titulo">Banco</th>
+                <th class="td-titulo">Monto A Pagar</th>
+            </tr>
+     </thead>
+     <tbody>
+            <tr>
+                <td class="td-proveedores-index" align="center">
+                    <input name="index" id="indexText" value="1" size="2" maxlength="3" readonly="readonly" type="text" style="text-align: center;"></input>
+                </td>
+                <td class="td-proveedores-rif"><?php $this->formulario->getElement(Application_Form_CargarProveedores::E_RIF)
+                                ->setAttrib('id', Application_Form_CargarProveedores::E_RIF . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_RIF)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_RIF)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_RIF)->renderErrors(); 
+                         ?>     
+                </td>
+                <td class="td-proveedores-nac"><?php $this->formulario->getElement(Application_Form_CargarProveedores::E_NACIONALIDAD)
+                                ->setAttrib('id', Application_Form_CargarProveedores::E_NACIONALIDAD . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_NACIONALIDAD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_NACIONALIDAD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_NACIONALIDAD)->renderErrors(); 
+                         ?>
+                </td>
+                <td class="td-proveedores-razon"><?php $this->formulario->getElement(Application_Form_CargarProveedores::E_RAZON)
+                                ->setAttrib('id', Application_Form_CargarProveedores::E_RAZON . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_RAZON)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_RAZON)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_RAZON)->renderErrors();
+                             ?>
+                </td>
+                <td class="td-proveedores-representante"><?php $this->formulario->getElement(Application_Form_CargarProveedores::E_REPRESENTANTE)
+                                ->setAttrib('id', Application_Form_CargarProveedores::E_REPRESENTANTE . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_REPRESENTANTE)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_REPRESENTANTE)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_REPRESENTANTE)->renderErrors();
+                             ?>
+                </td>
+                <td class="td-proveedores-cuenta"><?php $this->formulario->getElement(Application_Form_CargarProveedores::E_NUMERO_CUENTA)
+                                ->setAttrib('id', Application_Form_CargarProveedores::E_NUMERO_CUENTA . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_NUMERO_CUENTA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_NUMERO_CUENTA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_NUMERO_CUENTA)->renderErrors();
+                             ?>
+                </td> 
+                <td class="td-proveedores-tipocuenta"><?php $this->formulario->getElement(Application_Form_CargarProveedores::E_TIPO_CUENTA)
+                                ->setAttrib('id', Application_Form_CargarProveedores::E_TIPO_CUENTA . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_TIPO_CUENTA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_TIPO_CUENTA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_TIPO_CUENTA)->renderErrors();
+                             ?>
+                </td>
+                <td class="td-proveedores-banco"><?php $this->formulario->getElement(Application_Form_CargarProveedores::E_BANCOTXT)
+                                ->setAttrib('id', Application_Form_CargarProveedores::E_BANCOTXT . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_BANCOTXT)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_BANCOTXT)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_BANCOTXT)->renderErrors();
+                             ?>
+                </td>             
+                <td class="td-proveedores-monto"><?php $this->formulario->getElement(Application_Form_CargarProveedores::E_MONTO)
+                                ->setAttrib('id', Application_Form_CargarProveedores::E_MONTO . '1')
+                                ->setAttrib('oninput','sumaTotal(this)');
+
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_MONTO)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_MONTO)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarProveedores::E_MONTO)->renderErrors();
+                             ?>
+                </td>
+            </tr>
+            </tr>
+    
+        </tbody>
+    </table>
+ <br>
+ <br>
+ <br>    
+ </fieldset>
+ 
+ <!-- BOTONES DE GUARDAR Y CANCELAR -->
+ 
+ <table style="width: 99%;">
+        <tbody>  
+            <tr>
+       
+                <td style="text-align: right; "><?php
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_CANCELAR)->renderViewHelper();
+                    ?>
+                </td>
+                
+                <td ><?php
+                    echo $this->formulario->getElement(Application_Form_CargarProveedores::E_CARGAR)->renderViewHelper();
+                    ?>
+                </td>
+
+            </tr>
+        </tbody>  
+    </table>
+</div>
+
+<?php echo '</form>', PHP_EOL; ?>
+
+
+ <!--Script para numero de proveedores-->
+<script type="text/javascript">
+    
+    function getDatosRif(element){
+        var fila = element.id;
+        var txtRif = $('#'+fila);
+        var ruta = txtRif.attr('url');
+        $('#nacionalidad'+fila.charAt(fila.length-1)).val('');
+        $('#razon'+fila.charAt(fila.length-1)).val('');
+        $('#representante'+fila.charAt(fila.length-1)).val('');
+        $('#numcuenta'+fila.charAt(fila.length-1)).val('');
+        $('#tipocuenta'+fila.charAt(fila.length-1)).val('');
+        $('#bancotxt'+fila.charAt(fila.length-1)).val('');
+
+        $.ajax({
+            type: 'GET',
+            url: ruta + '/proveedores/' + txtRif.val(),
+            dataType: 'json',
+            async: true,
+            beforeSend: function () { $("#modal").show(); },
+            complete: function () { $("#modal").hide(); }, 
+            success: function (proveedores) {
+                console.log(proveedores);
+                if(proveedores){               
+                    $('#nacionalidad'+fila.charAt(fila.length-1)).val(proveedores.nacionalidad);
+                    $('#razon'+fila.charAt(fila.length-1)).val(proveedores.razon);
+                    $('#representante'+fila.charAt(fila.length-1)).val(proveedores.representante);
+                    $('#numcuenta'+fila.charAt(fila.length-1)).val(proveedores.numcuenta);
+                    $('#tipocuenta'+fila.charAt(fila.length-1)).val(proveedores.tipocuenta);
+                    $('#bancotxt'+fila.charAt(fila.length-1)).val(proveedores.codigo_banco);                
+                }
+            }
+        });
+    }
+    
+    
+    function validarFila(fila){
+        
+        var table = document.getElementById("tblProveedores");
+        
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            
+            if(fila.value != "" && fila.id != row.cells[1].firstElementChild.id && fila.value == row.cells[1].firstElementChild.value){
+                alert("Rif {"+fila.value+"} ya fue ingresado en la fila {"+row.cells[0].firstElementChild.value+"}");
+                fila.value = "";              
+                $("#nacionalidad"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#razon"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#representante"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#numcuenta"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#tipocuenta"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#bancotxt"+fila.id.charAt(fila.id.length-1)).val(null);
+            }
+        }
+        
+    }   
+    
+    $("#cargarTip").click(function(event){
+        if(!confirm ("Desea continuar?"))
+           event.preventDefault();
+    });
+    
+    function sumaTotal(){
+       
+        var table = document.getElementById("tblProveedores");
+        var total = 0;
+        
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            //iterate through rows
+            //rows would be accessed using the "row" variable assigned in the for loop
+            if(row.cells[8].firstElementChild.value) total+=parseFloat(row.cells[8].firstElementChild.value);
+        }
+        
+
+        document.getElementById("montoText").value = total;
+
+        
+    }
+    
+    function agregarFilaProveedores() {
+        let tbody      = $('#tblProveedores').children('tbody');
+        let fila       = $('#tblProveedores tbody').find('tr:first').clone();
+        let ultimaFila = $('#tblProveedores tbody').find('tr:last');
+        let ultimoId   = ultimaFila.children('.td-proveedores-rif').children('input').attr('id');
+        let nuevoId    = parseInt(ultimoId.replace('<?php echo Application_Form_CargarProveedores::E_RIF; ?>', '')) + 1;
+
+        fila.children('.td-titulo').remove();
+        fila.children('.td-proveedores-index').remove();
+        fila.children('.td-proveedores-rif').remove();
+        fila.children('.td-proveedores-nac').remove();
+        fila.children('.td-proveedores-razon').remove();
+        fila.children('.td-proveedores-representante').remove();
+        fila.children('.td-proveedores-cuenta').remove();
+        fila.children('.td-proveedores-tipocuenta').remove();
+        fila.children('.td-proveedores-banco').remove();
+        fila.children('.td-proveedores-monto').remove();
+        
+        let childCbo = `<th class="td-titulo">N°</th>
+                        <th class="td-titulo">C.I/R.I.F</th>
+                        <th class="td-titulo">Nac.</th>
+                        <th class="td-titulo">Razón Social</th>
+                        <th class="td-titulo">Rep.Legal</th>
+                        <th class="td-titulo">No.Cuenta</th>
+                        <th class="td-titulo">Tipo de Cuenta</th>
+                        <th class="td-titulo">Banco</th>
+                        <th class="td-titulo">Monto A Pagar</th>
+                        <tr>
+                        <td class="td-proveedores-index"><input name="index" id="indexText" size="2" maxlength="3" readonly="readonly" type="text" style="text-align: center;">
+                        <td class="td-proveedores-rif"><?php echo $this->formulario->getElement(Application_Form_CargarProveedores::E_RIF)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarProveedores::E_RIF)->renderDescription(),$this->formulario->getElement(Application_Form_CargarProveedores::E_RIF)->renderErrors();?>    
+                        <td class="td-proveedores-nac"><?php echo $this->formulario->getElement(Application_Form_CargarProveedores::E_NACIONALIDAD)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarProveedores::E_NACIONALIDAD)->renderDescription(),$this->formulario->getElement(Application_Form_CargarProveedores::E_NACIONALIDAD)->renderErrors();?>                        
+                        <td class="td-proveedores-razon"><?php echo $this->formulario->getElement(Application_Form_CargarProveedores::E_RAZON)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarProveedores::E_RAZON)->renderDescription(),$this->formulario->getElement(Application_Form_CargarProveedores::E_RAZON)->renderErrors();?>                     
+                        <td class="td-proveedores-representante"><?php echo $this->formulario->getElement(Application_Form_CargarProveedores::E_REPRESENTANTE)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarProveedores::E_REPRESENTANTE)->renderDescription(),$this->formulario->getElement(Application_Form_CargarProveedores::E_REPRESENTANTE)->renderErrors();?>
+                        <td class="td-proveedores-cuenta"><?php echo $this->formulario->getElement(Application_Form_CargarProveedores::E_NUMERO_CUENTA)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarProveedores::E_NUMERO_CUENTA)->renderDescription(),$this->formulario->getElement(Application_Form_CargarProveedores::E_NUMERO_CUENTA)->renderErrors();?>
+                        <td class="td-proveedores-tipocuenta"><?php echo $this->formulario->getElement(Application_Form_CargarProveedores::E_TIPO_CUENTA)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarProveedores::E_TIPO_CUENTA)->renderDescription(),$this->formulario->getElement(Application_Form_CargarProveedores::E_TIPO_CUENTA)->renderErrors();?>
+                        <td class="td-proveedores-banco"><?php echo $this->formulario->getElement(Application_Form_CargarProveedores::E_BANCOTXT)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarProveedores::E_BANCOTXT)->renderDescription(),$this->formulario->getElement(Application_Form_CargarProveedores::E_BANCOTXT)->renderErrors();?>
+                        <td class="td-proveedores-monto"><?php echo $this->formulario->getElement(Application_Form_CargarProveedores::E_MONTO)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarProveedores::E_MONTO)->renderDescription(),$this->formulario->getElement(Application_Form_CargarProveedores::E_MONTO)->renderErrors();?>
+                        </tr>`;
+        
+        fila.prepend(childCbo);
+        fila.children('.td-proveedores-rif').children('input').attr('id', '<?php echo Application_Form_CargarProveedores::E_RIF; ?>' + nuevoId);
+        fila.children('.td-proveedores-nac').children('input').attr('id', '<?php echo Application_Form_CargarProveedores::E_NACIONALIDAD; ?>' + nuevoId);
+        fila.children('.td-proveedores-razon').children('input').attr('id', '<?php echo Application_Form_CargarProveedores::E_RAZON ?>' + nuevoId);
+        fila.children('.td-proveedores-representante').children('input').attr('id', '<?php echo Application_Form_CargarProveedores::E_REPRESENTANTE; ?>' + nuevoId);
+        fila.children('.td-proveedores-cuenta').children('input').attr('id', '<?php echo Application_Form_CargarProveedores::E_NUMERO_CUENTA; ?>' + nuevoId);
+        fila.children('.td-proveedores-tipocuenta').children('input').attr('id', '<?php echo Application_Form_CargarProveedores::E_TIPO_CUENTA; ?>' + nuevoId);
+        fila.children('.td-proveedores-banco').children('input').attr('id', '<?php echo Application_Form_CargarProveedores::E_BANCOTXT; ?>' + nuevoId);
+        fila.children('.td-proveedores-monto').children('input').attr('id', '<?php echo Application_Form_CargarProveedores::E_MONTO; ?>' + nuevoId);
+        
+      
+        var cantFilas = $('#tblProveedores tbody tr').length;
+        $('#numproveedores').val(cantFilas);
+        fila.children('.td-proveedores-index').children('input').val(cantFilas+1);
+        
+        if (cantFilas !== 9){
+            tbody.append(fila);
+        }
+        
+       
+    }
+
+    function quitarFilaProveedores(anchor) {
+        var cantFilas  = $('#tblProveedores tbody tr').length;
+        var ultimaFila = $('#tblProveedores tbody').find('tr:last');
+
+        if (cantFilas !== 1) {
+            ultimaFila.remove();
+            $('#numproveedores').val($('#tblProveedores tbody tr').length);
+        }
+        sumaTotal(this);
+    }
+</script>
+
+ 
+

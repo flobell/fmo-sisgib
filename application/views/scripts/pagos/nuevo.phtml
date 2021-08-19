@@ -1,0 +1,192 @@
+<br>
+<br>
+<h1 style="text-align: center">GENERACIÓN DE INTERFACES BANCARIAS</h1>
+
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+
+ <!-- ENTIDADES BANCARIAS -->   
+ 
+<fieldset>             
+    <table class="general" summary="Datos Bancarios " style="width:30%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Datos de Pago</legend>
+        <tbody>  
+            <tr>
+                <th>Código del Banco</th><br>
+                <td style="width: 5%"><?php
+                    echo $this->formulario->getElement(Application_Form_Pagos::E_COD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_Pagos::E_COD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_Pagos::E_COD)->renderErrors();
+                         ?>
+                </td>
+                            
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    
+    <!-- CUENTAS BANCARIAS DE FMO ASOCIADAS AL BANCO SELECCIONADO -->
+    <table class="general" summary="Listado de Proveedores" style="width: 50%">
+        <thead>
+            <tr>
+                <th colspan="3">Cuentas FMO A Asociar</th>
+            </tr>
+            <tr>
+                <th>Número de Cuenta</th>
+                <th>Tipo de Cuenta</th>
+                <th style="width: 10%">Selección</th>
+            </tr>
+        </thead>
+    <tbody>
+<?php
+
+if ($this->cuentasfmo and $this->cuentasfmo->count()):
+    foreach ($this->cuentasfmo as $fila): ?>
+        
+     <?php if($fila->tipocuenta == 01){
+              $tipo = 'CORRIENTE';  
+            }
+           if($fila->tipocuenta == 02){
+              $tipo = 'AHORRO';  
+            }
+           if($fila->tipocuenta == 03){
+              $tipo = 'F.A.L';  
+            }; ?>
+        
+        <tr>
+            <td align="center"><?php echo $fila->numcuenta; ?></td>
+            <td align="center"><?php echo $tipo; ?></td>
+            <td align="center"><?php $this->formulario->getElement(Application_Form_Pagos::E_SELECCION)->clearMultiOptions();
+                                     $this->formulario->getElement(Application_Form_Pagos::E_SELECCION)->addMultiOption($fila->numcuenta);
+                                     echo $this->formulario->getElement(Application_Form_Pagos::E_SELECCION)->renderViewHelper(),
+                                          $this->formulario->getElement(Application_Form_Pagos::E_SELECCION)->renderDescription(),
+                                          $this->formulario->getElement(Application_Form_Pagos::E_SELECCION)->renderErrors();
+                              ?>
+            </td>
+        </tr>
+    <?php
+        endforeach;
+    else: ?>
+            <tr>
+                <td colspan="10" align="center">La consulta no devolvió registros</td>
+            </tr>
+    <?php
+    endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->cuentasfmo):
+       //Zend_Debug::dd($clientes);
+        echo $this->paginationControl($this->cuentasfmo);
+    endif;
+    ?><br><br>
+    
+   
+
+   <!-- SELECCION DEL ESTRUCTURA -->
+    <table class="general" summary="estructura" style="width:20%">
+        <tbody>
+            <tr>
+                <th>Estructura Bancaria</th>
+            </tr>
+            <tr>
+                <td style="text-align: center">
+                    <?php
+                    echo $this->formulario->getElement(Application_Form_Pagos::E_ESTRUCTURA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_Pagos::E_ESTRUCTURA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_Pagos::E_ESTRUCTURA)->renderErrors();
+                   ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    
+</fieldset>
+<br>
+<br>
+<br>
+<br>
+ 
+ <!-- DATOS DE INTERFAZ EN TABLA  -->   
+ <fieldset><br>     
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Interfaces No Generadas</legend>
+    <table class="general" summary="Listado de Centros de Acopio" style="width: 70%">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th style="width: 25%">Titulo</th>
+                <th>Tipo Cliente</th>
+                <th>No.Pagos</th>
+                <th>Monto Total</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th style="width: 10%">Generar</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+
+        if ($this->ultima and $this->ultima->count()):
+            foreach ($this->ultima as $fila): ?>
+                <tr>
+                    <td align="center"><?php echo $fila->id_interfaz; ?></td>
+                    <td align="center"><?php echo $fila->titulo; ?></td>
+                    <td align="center"><?php echo $fila->cliente; ?></td>
+                    <td align="center"><?php echo $fila->numpagos; ?></td>
+                    <td align="center"><?php echo $fila->monto_total; ?></td>
+                    <td align="center"><?php echo $fila->usuario; ?></td>
+                    <td align="center"><?php echo $fila->fecha; ?></td>
+                    <td align="center"><?php $this->formulario->getElement(Application_Form_Pagos::E_GENERAR)->clearMultiOptions();
+                                             $this->formulario->getElement(Application_Form_Pagos::E_GENERAR)->addMultiOption($fila->id_interfaz);
+                                             echo $this->formulario->getElement(Application_Form_Pagos::E_GENERAR)->renderViewHelper(),
+                                                  $this->formulario->getElement(Application_Form_Pagos::E_GENERAR)->renderDescription(),
+                                                  $this->formulario->getElement(Application_Form_Pagos::E_GENERAR)->renderErrors();
+                                               ?>
+                    </td>
+                    
+                </tr>
+        <?php
+            endforeach;
+        else: ?>
+            <tr>
+                <td colspan="8" align="center">La consulta no devolvió registros</td>
+            </tr>
+        <?php
+        endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->ultima):
+
+        echo $this->paginationControl($this->ultima);
+    endif;
+    ?>
+    <br>
+ 
+ </fieldset>
+ <br>
+ <br>
+ 
+ <!-- BOTONES DE GUARDAR Y CANCELAR -->
+ 
+ <table style="width: 99%;">
+        <tbody>  
+            <tr>
+                <td style="text-align: center">
+                    <?php
+                    echo $this->formulario->getElement(Application_Form_Pagos::E_GUARDAR)->renderViewHelper();
+                    ?>
+                    <?php
+                    echo $this->formulario->getElement(Application_Form_Pagos::E_CANCELAR)->renderViewHelper();
+                    ?>
+                </td>
+            </tr>
+        </tbody>  
+ </table><br><br><br>
+ 
+
+<?php echo '</form>', PHP_EOL; ?>

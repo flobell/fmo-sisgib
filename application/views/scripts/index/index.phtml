@@ -1,0 +1,25 @@
+<?php
+$sistema = Zend_Registry::get('sistema');
+$usuario = Fmo_Model_Seguridad::getUsuarioSesion();
+?>
+<h1 style="text-transform: uppercase; text-align: center;">
+    <?php echo $this->escape($sistema['titulo']), ' (', $this->escape($sistema['siglado']), ')'; ?>
+</h1>
+<h2 style="margin-left: 10px; margin-right: 10px; text-align: center; font-weight: normal" >
+    <?php
+
+if (isset($usuario->nombre, $usuario->apellido)):
+    echo '¡Bienvenido <b>';
+    echo ucwords(strtolower($usuario->nombre . ' ' . $usuario->apellido));
+    echo '</b>! Usted ha entrado al ';
+endif; ?><b><?php echo $sistema['titulo']; ?> (<?php echo strtoupper($sistema['siglado']); ?>)</b>
+</h2>
+<h2>
+    <p style="margin: 10px;  text-align: center; font-weight: normal" align="justify" >
+        Este sistema permite la <i>Generación de Interfaces Bancarias</i> para
+        el pago de nómina y proveedores de la empresa CVG Ferrominera Orinoco
+    </p>
+</h2>
+<div align="center">
+    <?php echo $this->img('portada.png'); ?>
+</div>

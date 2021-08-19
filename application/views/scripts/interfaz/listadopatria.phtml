@@ -1,0 +1,212 @@
+<?php
+    // Desactivar Tiempo Máximo de Ejecución (Para consultas que devuelvan muchos registros)
+    set_time_limit(0); 
+
+    // Aumentar el tamaño de buffer de datos (Para consultas que devuelvan muchos registros)
+    ini_set('memory_limit', '2048M');
+
+    $sysInfo     = new Fmo_SystemInfo();
+    $titulo      = 'LISTADO DE INTERFACES';
+    $subtitulo   = $this->banco->nombre_banco;
+    //Zend_Debug::dd($this->detalle);
+?>
+
+<style type="text/css">
+    ol {
+        padding: 0 0 0 2em;
+        counter-reset: item;
+    }
+
+    ol > li {
+        padding: 0 0 0 2em;
+        text-indent: -2em;
+        list-style-type: none;
+        counter-increment: item;
+    }
+
+    ol > li:before {
+        display: inline-block;
+        width: 1em;
+        padding-right: 0.5em;
+        font-weight: bold;
+        text-align: right;
+        content: counter(item) ".";
+    }
+</style>
+
+<div class="container-fluid" align="center">
+    
+    <div class="row" style="width:90%;">
+        <h3 align="center"><?php echo $titulo; ?></h3>
+        <h4 align="center"><b><?php echo $subtitulo; ?></b></h4>
+        <table id="tblDetalle" class="table general table-striped table-bordered table-condensed table-hover nowrap">
+            <caption></caption>
+            <thead>
+                <tr>
+                    <th style="width: 5%; text-align: center;">Código</th>
+                    <th style="width: 20%; text-align: center;">Titulo</th>
+                    <th style="width: 8%; text-align: center;">Tipo Cliente</th>
+                    <th style="width: 5%; text-align: center;">N° Pagos</th>
+                    <th style="width: 8%; text-align: center;">Monto Total</th>
+                    <th style="width: 10%; text-align: center;">Usuario</th>
+                    <th style="width: 8%; text-align: center;">Fecha</th>
+                    <th style="width: 8%; text-align: center;">Estado</th>
+                    <th style="width: 8%; text-align: center;">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="row">
+        <div class="col-xs-12 text-center">
+            <a class="btn btn-primary" href="<?php echo $this->url(array('controller' => 'interfaz', 'action' => 'listar'))?>">
+                <i class="glyphicon glyphicon-refresh"></i> 
+                Nueva Consulta
+            </a>
+        </div>
+    </div> -->
+
+    
+</div>
+
+<script type="text/javascript">
+    
+    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+      "date-uk-pre": function ( a ) {
+          var ukDatea = a.split('-');
+          return (ukDatea[2] + ukDatea[1] + ukDatea[0]) * 1;
+      },
+
+      "date-uk-asc": function ( a, b ) {
+          return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+      },
+
+      "date-uk-desc": function ( a, b ) {
+          return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+      }
+    });
+    
+    $(document).ready(function() {
+        <?php 
+        
+            if (count($this->detalle) > 0) {
+                $var = 'var arrData = [';
+
+                foreach ($this->detalle as $row) {
+                    $var .= "{
+                        id_interfaz: '{$row->id_interfaz}', 
+                        titulo: '{$row->titulo}', 
+                        cliente: '{$row->cliente}',
+                        monto_total: '{$row->monto_total}',
+                        numpagos: '{$row->numpagos}',
+                        usuario: '{$row->usuario}',
+                        fecha: '{$row->fecha}',
+                        estado: '{$row->estado}',
+                        partes: '{$row->partes}'
+                    },";
+                }
+
+                $var .= '];';
+
+                echo $var;
+            } else {
+                echo 'var arrData = [];';
+            }
+            
+            //echo 'var arrData = [];';
+        ?>
+                
+        $('#tblDetalle').DataTable({
+            dom: "<'row' l f r><'row' t><'row' i p>",
+            // buttons: {
+            //     buttons: [
+            //         {
+            //             className: 'btn btn-primary',
+            //             text: '<?php //echo $this->img('ico_volver.png'); ?><b> VOLVER</b>',
+            //             action: function ( e, dt, node, config ) {
+            //                 history.back();
+            //             }
+            //         },
+            //     ],
+            //     dom: {
+            //         button: {
+            //             tag: "button",
+            //             className: null
+            //         }
+            //     }
+            // },
+            language: { emptyTable: 'La consulta no devolvió registros.' },
+            paging:   true,
+            pageLength: 10,
+            data: arrData,
+            columns: [
+                {
+                    data: 'id_interfaz',
+                    className: 'text-center'
+                },
+                {   
+                    data: 'titulo',
+                    className: 'text-left'
+                },
+                {
+                    data: 'cliente',
+                    className: 'text-center'
+                },
+                {
+                    data: 'numpagos',
+                    className: 'text-center'
+                },
+                {
+                    data: 'monto_total',
+                    className: 'text-right',
+                    render: function(data, type, row, meta){
+                        return new Intl.NumberFormat("de-DE", {minimumFractionDigits: 2}).format(data);
+                    }
+                },
+                {   
+                    data: 'usuario',
+                    className: 'text-center'
+                },
+                {
+                    data: 'fecha',
+                    className: 'text-center',
+                    type: 'date-uk'
+                },
+                {
+                    data: 'estado',
+                    className: 'text-center'
+                },
+                {
+                    data: 'id_interfaz',
+                    className: 'text-center',
+                    orderable: false,
+                    render: function (data, type, row, meta) {
+                        var txt;
+                        if(row.partes>1){
+                            txt = row.estado==='1'?'<a target="_blank" href="../interfaz/detalle/id_interfaz/'+data+'" title="Ver Partes"><?php echo $this->img('ico_repositorio.png'); ?></a>':'<?php echo $this->img('ico_repositorio2.png'); ?>';
+                        } else {
+                            txt = row.estado==='1'?'<a target="_blank" href="../interfaz/txt/id_interfaz/'+data+'/codigo_banco/'+<?php echo $this->banco->codigo ?>+'/grupo/1" title="Descargar txt"><?php echo $this->img('ico_descargar3.png'); ?></a>':'<?php echo $this->img('ico_descargar3_2.png'); ?>';
+                        }
+                        
+                            
+                    return  txt+
+                            '&nbsp;<a target="_blank" href="../reporte/reporte/id_interfaz/'+data+'" title="Ver Reporte"><?php echo $this->img('ico_archivo_pdf.png'); ?></a>'+
+                            '&nbsp;<a href="../interfaz/eliminar/id_interfaz/'+data+'" title="Eliminar"><?php echo $this->img('ico_eliminar.png'); ?></a>';               
+
+                    }
+                }  
+            ],
+            columnDefs: [
+                {
+                    targets: [7],
+                    render: function(data, type, row){
+                        return data==='1'?'GENERADA':'NO GENERADA';
+                    }
+                }
+            ],
+            order: [[ 0, "desc" ]]
+        });
+
+    });
+</script>

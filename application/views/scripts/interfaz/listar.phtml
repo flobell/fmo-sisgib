@@ -1,0 +1,114 @@
+<style>
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #333;
+}
+
+h3 {
+    display: block;
+    font-size: 24px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+th {
+        text-align: center;
+    }
+</style>
+
+<h3 style="text-align: center">LISTADO DE INTERFACES TXT</h3>
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+<br><br>
+<fieldset>             
+    <table class="general" summary="Datos Bancarios " style="width:30%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">SELECCIONAR BANCO</legend>
+        <tbody>  
+            <tr>
+                <th>Entidad Bancaria</th><br>
+                <td style="width: 5%"><?php
+                    echo $this->formulario->getElement(Application_Form_Interfaz::E_COD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_Interfaz::E_COD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_Interfaz::E_COD)->renderErrors();
+                         ?>
+                </td>
+                            
+            </tr>
+        </tbody>
+    </table><br>
+</fieldset>
+    
+<!--
+<br><br><br><br>  
+<fieldset><br>
+    <table class="general" summary="Listado de Proveedores" style="width: 80%">
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Interfaces Creadas</legend>
+        <thead>
+            <tr>
+                <th style="width: 5%">Código</th>
+                <th style="width: 20%">Titulo</th>
+                <th style="width: 8%">Tipo Cliente</th>
+                <th style="width: 8%">Monto Total</th>
+                <th style="width: 10%">Usuario</th>
+                <th style="width: 8%">Fecha</th>
+                <th style="width: 8%">Estado</th>
+                <th colspan="2">Acción</th>
+            </tr>
+        </thead>
+    <tbody>
+<?php
+/*
+if ($this->interfaz and $this->interfaz->count()):
+    foreach ($this->interfaz as $fila):?>
+        
+        <?php if($fila->estado == 1){
+              $status = 'GENERADA';  
+            }
+            else $status = 'NO GENERADA'; ?>
+        
+        <tr>
+            <td align="center"><?php echo $fila->id_interfaz; ?></td>
+            <td align="left"><?php echo $fila->titulo; ?></td>
+            <td align="center"><?php echo $fila->cliente; ?></td>
+            <td align="right"><?php echo $fila->monto_total?></td>
+           
+            <td align="center"><?php echo $fila->usuario; ?></td>
+            <td align="center"><?php echo Fmo_Util::stringToZendDate($fila->fecha)->get('dd/MM/yyyy'); ?></td>
+            <td align="center"><?php echo $status ?></td>
+
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'detalle', 'id_interfaz' => $fila->id_interfaz)); ?>" title="Ver"><?php echo $this->img('ico_detalle.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'eliminar', 'id_interfaz' => $fila->id_interfaz)); ?>" title="Eliminar"><?php echo $this->img('ico_eliminar.png'); ?></a></td>
+            
+
+        </tr>
+    <?php
+        endforeach;
+    else: ?>
+            <tr>
+                <td colspan="10" align="center">La consulta no devolvió registros</td>
+            </tr>
+    <?php
+    endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->interfaz):
+       //Zend_Debug::dd($clientes);
+        echo $this->paginationControl($this->interfaz);
+    endif;
+    ?><br>
+    
+    
+    
+ </fieldset>
+-->*/

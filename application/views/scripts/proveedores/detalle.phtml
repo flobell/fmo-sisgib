@@ -1,0 +1,74 @@
+
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+<br>
+<br>
+<h1 style="text-align: center">LISTADO DE CUENTAS DE PROVEEDORES</h1>
+<br><br><br>    
+<fieldset><br>
+    <table class="general" summary="Listado de estructuras">
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Cuentas de Proveedores</legend>
+        <thead>
+            <tr>
+                <th>C.I/R.I.F</th>
+                <th>Código</th>
+                <th>Banco</th>
+                <th>Número de Cuenta</th>
+                <th>Tipo de Cuenta</th>
+                <th>Estado</th>
+                <th colspan="2">Acción</th>
+                
+            </tr>
+        </thead>
+    <tbody>
+<?php
+    
+if ($this->cuentas_proveedores and $this->cuentas_proveedores->count()):
+    foreach ($this->cuentas_proveedores as $fila): ?>
+        
+        <?php if($fila->estado == 1){
+              $status = 'Activa';  
+            }
+            else $status = 'Inactiva'; ?>
+        <tr>
+           
+            <td align="center"><?php echo $fila->rif; ?></td>
+            <td align="center"><?php echo $fila->codigo_banco; ?></td>
+            <td align="center"><?php echo $fila->banco; ?></td>
+            <td align="center"><?php echo $fila->numcuenta; ?></td>
+            <td align="center"><?php echo $fila->tipocuenta; ?></td>
+            <td align="center"><?php echo $status; ?></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'editarcuenta', 'numcuenta' => $fila->numcuenta, 'nacionalidad' => $fila->nacionalidad));?>" title="Editar"><?php echo $this->img('ico_editar.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'eliminarcuenta', 'numcuenta' => $fila->numcuenta)); ?>" title="Eliminar"><?php echo $this->img('ico_eliminar.png'); ?></a></td>            
+            
+        </tr>
+    <?php
+        endforeach;
+    else: ?>
+            <tr>
+                <td colspan="10" align="center">La consulta no devolvió registros</td>
+            </tr>
+    <?php
+    endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->cuenta_proveedores):
+       //Zend_Debug::dd($clientes);
+        echo $this->paginationControl($this->cuentas_proveedores);
+    endif;
+    ?>
+    
+    <p align="center">
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'proveedores', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+        <!--<a class="button" href="<?//php echo $this->url(array('module' => 'default', 'controller' => 'estructuras', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'numcuenta' => $this->proveedores->numcuenta), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>-->
+    </p>
+    
+ </fieldset>
+ <br>
+ <br>
+ <br>
+ <br>

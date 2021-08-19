@@ -1,0 +1,51 @@
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+
+<br><br><br>    
+<fieldset><br>
+    <table class="general" summary="Listado de Campos de Relacion " style="width: 50%">
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Listado de Campos de Relación</legend>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Campo de Relación</th>      
+                <th width="10%" colspan="2">Acción</th>
+            </tr>
+        </thead>
+    <tbody>
+<?php
+
+if ($this->relacion and $this->relacion->count()):
+    foreach ($this->relacion as $fila): ?>
+        <tr>
+           
+            <td align="center"><?php echo $fila->id_relacion; ?></td>
+            <td align="center"><?php echo $fila->nombre; ?></td>
+            
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'editar', 'id_relacion' => $fila->id_relacion)); ?>" title="Editar"><?php echo $this->img('ico_editar.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'eliminar', 'id_relacion' => $fila->id_relacion)); ?>" title="Eliminar"><?php echo $this->img('ico_eliminar.png'); ?></a></td>
+        </tr>
+    <?php
+        endforeach;
+    else: ?>
+            <tr>
+                <td colspan="10" align="center">La consulta no devolvió registros</td>
+            </tr>
+    <?php
+    endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->relacion):
+       //Zend_Debug::dd($clientes);
+        echo $this->paginationControl($this->relacion);
+    endif;
+    ?>
+ </fieldset>
+ <br>
+ <br>
+ <br>
+ <br>

@@ -1,0 +1,54 @@
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+<br>
+<br>
+<h1 style="text-align: center">LISTADO DE TIPOS DE REGISTROS</h1>     
+
+<br><br>    
+<fieldset><br>
+    <table class="general" summary="Listado de Tipos de Cuentas " style="width: 50%">
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Listado de Tipos de Registros</legend>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo de Registro</th>      
+                <th width="10%" colspan="2">Acción</th>
+            </tr>
+        </thead>
+    <tbody>
+<?php
+
+if ($this->tiporegistro and $this->tiporegistro->count()):
+    foreach ($this->tiporegistro as $fila): ?>
+        <tr>
+           
+            <td align="center"><?php echo $fila->id_registro; ?></td>
+            <td align="center"><?php echo $fila->nombre; ?></td>
+            
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'editar', 'id_registro' => $fila->id_registro)); ?>" title="Editar"><?php echo $this->img('ico_editar.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'eliminar', 'id_registro' => $fila->id_registro)); ?>" title="Eliminar"><?php echo $this->img('ico_eliminar.png'); ?></a></td>
+        </tr>
+    <?php
+        endforeach;
+    else: ?>
+            <tr>
+                <td colspan="10" align="center">La consulta no devolvió registros</td>
+            </tr>
+    <?php
+    endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->tiporegistro):
+       //Zend_Debug::dd($clientes);
+        echo $this->paginationControl($this->tiporegistro);
+    endif;
+    ?>
+ </fieldset>
+ <br>
+ <br>
+ <br>
+ <br>

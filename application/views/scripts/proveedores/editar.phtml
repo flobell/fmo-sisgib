@@ -1,0 +1,137 @@
+<style>
+    #tblProveedores td {
+        text-align: center;
+    }
+</style>
+
+<br>
+<br>
+<h1 style="text-align: center">EDITAR PROVEEDOR</h1>
+
+<!-- FORMULARIO DE REGISTRO DE PROVEEDORES -->
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+<fieldset><br><br>          
+    <table class="general" summary="Datos Del Proveedor" style="width:30%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Datos de Proveedor</legend>
+       <!-- <tbody>  
+            <tr>
+                <th style="width: 30%">R.I.F/C.I:</th>
+                <td style="width: 2%"><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_LETRA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_LETRA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_LETRA)->renderErrors();
+                         ?>
+                </td>
+                <td style="width: 50%"><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_RIF)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_RIF)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_RIF)->renderErrors();
+                             ?>
+                </td>
+            </tr>
+        </tbody>-->
+    </table>
+    
+    <table class="general" summary="Datos Del Proveedor" style="width:55%; border-bottom: 1">
+        <tbody>
+            <tr>
+                <th>Razón Social:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_RAZON)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_RAZON)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_RAZON)->renderErrors();
+                    ?>
+                    
+                <th>R.I.F/C.I:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_LETRA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_LETRA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_LETRA)->renderErrors();
+                         ?>
+                <?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_RIF)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_RIF)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_RIF)->renderErrors();
+                         ?>
+                </td>
+            </tr>
+                <tr>
+                <th style="width: 30%">Representante Legal:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_REPRESENTANTE)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_REPRESENTANTE)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_REPRESENTANTE)->renderErrors();
+                    ?>
+                </td>
+                <th>Teléfono:</th><br>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_TELEFONO)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_TELEFONO)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_TELEFONO)->renderErrors();
+                         ?>
+                </td>  
+                 <tr>
+                <th style="width: 14.5%">Dirección:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_DIRECCION)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_DIRECCION)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_DIRECCION)->renderErrors();
+                    ?>
+                </td>
+                <?php echo $this->formulario->getElement(Application_Form_EditarProveedores::E_FECHA) ?>
+
+                <th>Correo:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_CORREO)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_CORREO)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_CORREO)->renderErrors();
+                             ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+   <!-- <table class="general" summary="Datos Del Proveedor" style="width:55%">
+        <tbody>
+            <tr>
+                <th style="width: 14.5%">Dirección:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_DIRECCION)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_DIRECCION)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_EditarProveedores::E_DIRECCION)->renderErrors();
+                    ?>
+                </td>
+                <?php echo $this->formulario->getElement(Application_Form_EditarProveedores::E_FECHA) ?>
+
+            </tr>
+        </tbody>  
+    </table>  
+    <br>-->
+    <br>
+</fieldset>   
+<br><br><br>
+   
+     <!-- BOTONES DE VOLVER Y GUARDADO -->
+    <table style="width: 99%;">
+        <tbody>  
+            <tr>
+                <td style="text-align: right; "><?php
+                echo $this->formulario->getElement(Application_Form_EditarProveedores::E_CANCELAR)->renderViewHelper();    
+                    ?>
+                </td>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_EditarProveedores::E_GUARDAR)->renderViewHelper();
+                    ?>
+                </td>
+            </tr>
+        </tbody>  
+    </table><br><br>
+</fieldset>
+ <br>
+ <br>
+
+<?php echo '</form>', PHP_EOL; ?>
+
+ 

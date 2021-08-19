@@ -1,0 +1,94 @@
+<br>
+<br>
+<h1 style="text-align: center">REPORTES</h1>
+
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+
+ <!-- ENDITADES BANCARIAS -->   
+ 
+<fieldset>             
+    <table class="general" summary="Datos Bancarios " style="width:30%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Entidades Bancarias</legend>
+        <tbody>  
+            <tr>
+                <th>Entidad Bancaria</th><br>
+                <td style="width: 5%"><?php
+                    echo $this->formulario->getElement(Application_Form_Reporte::E_COD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_Reporte::E_COD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_Reporte::E_COD)->renderErrors();
+                         ?>
+                </td>   
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+</fieldset><br><br><br>
+    
+
+ <!-- DATOS DE INTERFAZ EN TABLA  -->   
+ <fieldset>             
+     <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Interfaces Generadas</legend><br>
+    <table class="general" summary="Listado de Centros de Acopio" style="width: 70%">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th style="width: 25%">Titulo</th>
+                <th>Tipo Cliente</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th style="width: 10%">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        $status;
+        if ($this->interfaces and $this->interfaces->count()):
+            foreach ($this->interfaces as $fila): ?>
+                <?php if ($fila->estado == 1){
+                        $status = 'GENERADO';
+                      }else{
+                          $status = 'NO GENERADO';
+                      }?>
+                <tr>
+                    <td align="center"><?php echo $fila->id_interfaz; ?></td>
+                    <td align="left"><?php echo $fila->titulo; ?></td>
+                    <td align="center"><?php echo $fila->cliente; ?></td>
+                    <td align="center"><?php echo $status ?></td>
+                    <td align="center"><?php echo $fila->usuario; ?></td>
+                    <td align="center"><?php echo Fmo_Util::stringToZendDate($fila->fecha)->get('dd/MM/yyyy'); ?></td>
+                    
+                    <td width="5%" align="center"><a target="_blank" href="<?php echo $this->url(array('action' => 'reporte', 'id_interfaz' => $fila->id_interfaz)); ?>" title="Generar Reporte"><?php echo $this->img('ico_archivo_pdf.png'); ?></a></td>
+                    
+                </tr>
+        <?php
+            endforeach;
+        else: ?>
+            <tr>
+                <td colspan="8" align="center">La consulta no devolvió registros</td>
+            </tr>
+        <?php
+        endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->interfaces):
+
+        echo $this->paginationControl($this->interfaces);
+    endif;
+    ?>
+    <br>
+ </fieldset>
+ <br>
+ <br>
+
+ 
+
+
+<?php echo '</form>', PHP_EOL; ?>
+
+

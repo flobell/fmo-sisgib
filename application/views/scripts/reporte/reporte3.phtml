@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Reporte</title>
+
+    <style>
+        /** Define the margins of your page **/
+        @page {
+            margin: 25px 25px;
+        }
+               
+        body{
+            margin: 25px 25px;
+        }
+        
+        header {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            height: auto;
+
+            /** Extra personal styles **/
+            /*background-color: blue;*/
+            color: black;
+            text-align: center;
+            line-height: 35px;
+
+        }
+
+        footer {
+            position: fixed; 
+            bottom: 120px;
+            left: 0px; 
+            right: 0px;
+            height: auto;
+
+            /** Extra personal styles **/
+            background-color: blue;
+            color: white;
+            text-align: center;
+            line-height: 35px;
+
+            page-break-after: always;
+        }
+
+        .table-header{
+            /*background-color: green;*/
+            /*border: 1px solid black;*/
+            width: 100%;
+            text-align: center;
+        }
+
+        .table-header td{
+            /*border: 1px solid black;*/
+        }
+
+        .table-footer{
+            /*background-color: green;*/
+            border: 1px solid black;
+            width: 100%;
+            text-align: center;
+        }
+
+        .table-footer td{
+            border: 1px solid black;
+            height: 60px;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+    <!-- Define header and footer blocks before your content -->
+    <header>
+        <table class="general table-header">
+            <tbody>
+                <tr>
+                    <td>
+                        <img class="img img-fmo" src="<?php echo Fmo_Config::ENV_LIB_SHARED.'/public/images/fmologo64x64.png' ?>">
+                    </td>
+                    <td>
+                        <span >CVG FERROMINERA ORINOCO, C.A.</span><br>
+                        <span >GERENCIA GENERAL DE ADMINISTRACIÓN Y FINANZAS</span><br>
+                        <span >GERENCIA DE FINANZAS</span><br>
+                        <span >DEPARTAMENTO DE GESTIÓN BANCARIA</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </header>
+
+    <footer>
+        <table class="general table-footer" >
+            <thead>
+                <tr>
+                    <th>REVISADO POR:</th>
+                    <th>APROBADO POR:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </footer>
+    
+    <!-- Wrap the content of your PDF inside a main tag -->
+    <main>
+        <h1>Hello World</h1>
+    </main>
+
+</body> 
+        

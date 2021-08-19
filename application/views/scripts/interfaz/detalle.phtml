@@ -1,0 +1,138 @@
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+<br>
+<br>
+<h1 style="text-align: center"><?php echo $this->interfaz->id_interfaz." - ".$this->interfaz->titulo." - ".$this->banco->nombre_banco; ?></h1>
+<br>
+<br>
+<fieldset>
+    
+    <table class="general" style="width: 50%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Archivos de Texto</legend>
+        <thead>
+            <tr>
+                <th>N° Parte</th>
+                <th>N° Registros Parte</th>
+                <th>Monto Parte</th>
+                <th>Descargar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $totalRegistros = 0;
+            $montoTotal = 0;
+            
+            for($i=0, $offset=0; $i<$this->interfaz->partes; $i++, $offset+=$this->limite){
+            ?>
+                <tr>
+                    <td align="center" style="width: 10%"><?php echo 'Parte '.($i+1); ?></td>
+                    <td align="center" style="width: 10%">
+                        <?php
+                            $nRegistro = Application_Model_Interfaz::getDatosTxt($this->interfaz->id_interfaz,$i+1)->count(); 
+                            $totalRegistros+=$nRegistro;
+                            echo $nRegistro;
+                        ?>
+                    </td>
+                    <td align="right" style="width: 10%">
+                        <?php
+                            $montoParte = Application_Model_Interfaz::getDatosTxt($this->interfaz->id_interfaz,$i+1)->getRow(0)->monto_parte; 
+                            $montoTotal+=$montoParte;
+                            echo $montoParte;
+                        ?>
+                    </td>
+                    <td align="center" style="width: 10%">
+                        <a target="_blank" href="<?php echo $this->url(array('action' => 'txt', 'id_interfaz' =>  rawurlencode($this->interfaz->id_interfaz), 'codigo_banco' => rawurlencode($this->interfaz->codigo_banco), 'grupo' => rawurlencode($i+1))); ?>" title="Descargar archivo de texto (.txt)"><?php echo $this->img('ico_descargar3.png'); ?></a>
+                    </td>
+                </tr>
+            <?php
+            }
+            ?>
+                <tr>
+                    <td colspan="4"></td>
+                </tr>    
+                
+            <tr >
+                <td ></td>
+                <th>N° Total Registros</th>
+                <th>Monto Total</th>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td align="center" ><?php echo $totalRegistros;//$this->interfaz->numpagos; ?></td>
+                <td align="right" ><?php echo $montoTotal;//$this->interfaz->monto_total; ?></td>
+                <td></td>
+            </tr>
+            
+        </tbody>
+    </table>
+    
+ 
+</fieldset>
+
+<p align="center">
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'interfaz', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+        <!--<a class="button" href="<?//php echo $this->url(array('module' => 'default', 'controller' => 'estructuras', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'numcuenta' => $this->proveedores->numcuenta), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>-->
+</p>
+<!--
+<fieldset>
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Detalle de Interfaz</legend>
+    
+    <br>
+   
+    
+    <br>
+    
+    <table class="general" summary="Listado de estructuras" style="width: 80%">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>C.I/R.I.F</th>
+                <th>Nombre del Cliente</th>
+                <th>Número de Cuenta</th>
+                <th>Tipo de Cuenta</th>
+                <th>Monto a Pagar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+/*
+            if ($this->detalle_interfaz and $this->detalle_interfaz->count()):
+                foreach ($this->detalle_interfaz as $fila): ?>
+                    <tr>
+
+                        <td align="center" style="width: 5%"><?php echo $fila->id_interfaz; ?></td>
+                        <td align="center" style="width: 5%"><?php echo $fila->rif; ?></td>
+                        <td align="left" style="width: 20%"><?php echo $fila->nombre; ?></td>
+                        <td align="center" style="width: 15%"><?php echo $fila->numcuenta; ?></td>
+                        <td align="center" style="width: 10%"><?php echo $fila->tipo_cuenta; ?></td>
+                        <td align="right" style="width: 10%"><?php echo $fila->monto; ?></td>
+
+
+                    </tr>
+                <?php
+                    endforeach;
+                else: ?>
+                        <tr>
+                            <td colspan="10" align="center">La consulta no devolvió registros</td>
+                        </tr>
+                <?php
+                endif; ?>
+        </tbody>
+    </table>
+    
+        <?php
+        if ($this->detalle_interfaz):
+           //Zend_Debug::dd($clientes);
+            echo $this->paginationControl($this->detalle_interfaz);
+        endif;*/
+    ?>
+    
+ </fieldset>
+
+ <br>
+ -->

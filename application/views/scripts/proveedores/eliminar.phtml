@@ -1,0 +1,45 @@
+<br>
+<br>
+<h1 style="text-align: center">ELIMINAR PROVEEDOR</h1>     
+
+<fieldset>
+        <legend style="font-size: 15px; margin-bottom: -10px;margin-left: 8px ;width: auto;">Eliminar Proveedor</legend>
+        <br><br>
+    <table class="general" summary="Proveedores" style="width:50%">
+    <caption>¿Seguro que desea eliminar?</caption>
+    <tbody>
+    <tr>
+        <th style="width: 200px" align="center">RIF:</th>
+        <td align="center"><?php echo $this->escape($this->proveedores->rif); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Nacionalidad:</th>
+        <td align="center"><?php echo $this->escape($this->proveedores->nacionalidad); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Razón Social:</th>
+        <td align="center"><?php echo $this->escape($this->proveedores->razon); ?></td>   
+    </tr>
+    <tr>
+        <th align="center">Representante Legal:</th>
+        <td align="center"><?php echo $this->escape($this->proveedores->representante); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Teléfono:</th>
+        <td align="center"><?php echo $this->escape($this->proveedores->telefono); ?></td>
+    </tr>    
+    <tr>
+        <th align="center">Dirección:</th>
+        <td align="center"><?php echo $this->escape($this->proveedores->direccion); ?></td>
+    </tr>   
+    <tr>
+        <th align="center">Correo Electrónico:</th>
+        <td align="center"><?php echo $this->escape($this->proveedores->correo); ?></td>
+    </tr>  
+
+    </table>
+    <p align="center">
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'proveedores', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'proveedores', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'rif' => $this->proveedores->rif), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>
+    </p>
+</fieldset>

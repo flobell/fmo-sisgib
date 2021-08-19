@@ -1,0 +1,71 @@
+
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+
+<br><br><br>    
+<fieldset><br>
+    <table class="general" summary="Listado de estructuras" style="width:50%">
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Formato</legend>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Tipo Registro</th>
+               <!-- <th>Campo Relacional</th>
+                <th>Tipo de Dato</th>
+                <th>Longitud</th>
+                <th>Pos.Ini</th>
+                <th>Pos.Fin</th>
+                <th>Operación</th>-->
+                <th>Acción</th>
+            </tr>
+        </thead>
+    <tbody>
+<?php
+
+if ($this->formato and $this->formato->count()):
+    foreach ($this->formato as $fila): ?>
+        <tr>
+           
+            <td align="center"><?php echo $fila->codigo_estructura; ?></td>
+            <td align="center"><?php echo $fila->tipo_registro; ?></td>
+            <!--<td align="center"><?//php echo $fila->campo_relacion; ?></td>
+            <td align="center"><?//php echo $fila->tipo_dato; ?></td>
+            <td align="center"><?//php echo $fila->longitud; ?></td>
+            <td align="center"><?//php echo $fila->posicion_inicial; ?></td>
+            <td align="center"><?//php echo $fila->posicion_final; ?></td>
+            <td align="center"><?//php echo $fila->operacion; ?></td>-->
+            
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'eliminarformato', 'codigo_estructura' => $fila->codigo_estructura, 'id_formato' => $fila->id_formato)); ?>" title="Eliminar"><?php echo $this->img('ico_eliminar.png'); ?></a></td>
+            
+            
+        </tr>
+    <?php
+        endforeach;
+    else: ?>
+            <tr>
+                <td colspan="10" align="center">La consulta no devolvió registros</td>
+            </tr>
+    <?php
+    endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->formato):
+       //Zend_Debug::dd($clientes);
+        echo $this->paginationControl($this->formato);
+    endif;
+    ?>
+    
+    <p align="center">
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'estructuras', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+        <!--<a class="button" href="<?//php echo $this->url(array('module' => 'default', 'controller' => 'estructuras', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'numcuenta' => $this->proveedores->numcuenta), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>-->
+    </p>
+    
+ </fieldset>
+ <br>
+ <br>
+ <br>
+ <br>

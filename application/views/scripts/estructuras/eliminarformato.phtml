@@ -1,0 +1,52 @@
+<br>
+<br>
+<h1 style="text-align: center">ELIMINAR FORMATO</h1>     
+
+<fieldset>
+        <legend style="font-size: 15px; margin-bottom: -10px;margin-left: 8px ;width: auto;">Eliminar formato</legend>
+        <br><br>
+    <table class="general" summary="Proveedores" style="width:50%">
+    <caption>¿Seguro que desea eliminar?</caption>
+    <tbody>
+    <tr>
+        <th style="width: 200px" align="center">ID:</th>
+        <td align="center"><?php echo $this->escape($this->formato->id_formato); ?></td>
+    </tr>
+    <tr>
+        <th style="width: 200px" align="center">Tipo de Registro:</th>
+        <td align="center"><?php echo $this->escape($this->formato->tipo_registro); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Campo:</th>
+        <td align="center"><?php echo $this->escape($this->formato->campo_relacion); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Longitud:</th>
+        <td align="center"><?php echo $this->escape($this->formato->longitud); ?></td>   
+    </tr>
+    <tr>
+        <th align="center">Posición Inicial:</th>
+        <td align="center"><?php echo $this->escape($this->formato->posicion_inicial); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Posición Final:</th>
+        <td align="center"><?php echo $this->escape($this->formato->posicion_final); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Tipo de Dato:</th>
+        <td align="center"><?php echo $this->escape($this->formato->tipo_dato); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Alineación:</th>
+        <td align="center"><?php echo $this->escape($this->formato->alineacion); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Operanción/Regla:</th>
+        <td align="center"><?php echo $this->escape($this->formato->operacion); ?></td>
+    </tr>
+    </table>
+    <p align="center">
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'estructuras', 'action' => 'eliminarformato', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'estructuras', 'action' => 'eliminarformato', 'confirmar' => 'S', 'page' => $this->page, 'id_formato' => $this->formato->id_formato), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>
+    </p>
+</fieldset>

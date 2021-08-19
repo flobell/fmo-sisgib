@@ -1,0 +1,45 @@
+<br>
+<br>
+<h1 style="text-align: center">ELIMINAR INTERFAZ</h1>     
+
+<fieldset>
+        <legend style="font-size: 15px; margin-bottom: -10px;margin-left: 8px ;width: auto;">Eliminar Interfaz</legend>
+        <br><br>
+    <table class="general" summary="interfaces" style="width:50%">
+        <caption>¿Seguro que desea eliminar?</caption>
+    <tbody>
+    <tr>
+        <th style="width: 35%" align="center">Código:</th>
+        <td align="center"><?php echo $this->escape($this->interfaz->id_interfaz); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Titulo:</th>
+        <td align="center"><?php echo $this->escape($this->interfaz->titulo); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Tipo Cliente:</th>
+        <td align="center"><?php echo $this->escape($this->interfaz->cliente); ?></td>   
+    </tr>
+    <tr>
+        <th align="center">No.Pagos:</th>
+        <td align="center"><?php echo $this->escape($this->interfaz->numpagos); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Monto Total:</th>
+        <td align="center"><?php echo $this->escape($this->interfaz->monto_total); ?></td>
+    </tr>    
+    <tr>
+        <th align="center">Usuario:</th>
+        <td align="center"><?php echo $this->escape($this->interfaz->usuario); ?></td>
+    </tr>   
+    <tr>
+        <th align="center">Fecha:</th>
+        <td align="center"><?php echo $this->escape($this->interfaz->fecha); ?></td>
+    </tr>  
+
+    </table>
+    <p align="center">
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'interfaz', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'interfaz', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'id_interfaz' => $this->interfaz->id_interfaz), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>
+    </p>
+</fieldset>

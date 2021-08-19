@@ -1,0 +1,60 @@
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+<br>
+<br>
+<h1 style="text-align: center">LISTADO DE ESTRUCTURAS BANCARIAS</h1>
+<br><br><br>    
+<fieldset><br>
+    <table class="general" summary="Listado de estructuras" style=" width: 80%">
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Listado de estructuras activas</legend>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Código Banco</th>
+                <th width="30%">Título</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th width="10%" colspan="3">Acción</th>
+            </tr>
+        </thead>
+    <tbody>
+<?php
+
+if ($this->estructura and $this->estructura->count()):
+    foreach ($this->estructura as $fila): ?>
+        <tr>
+            
+            
+            <td align="center"><?php echo $fila->codigo_estructura; ?></td>
+            <td align="center"><?php echo $fila->codigo_banco; ?></td>
+            <td align="center"><?php echo $fila->titulo; ?></td>
+            <td align="center"><?php echo $fila->usuario; ?></td>
+            <td align="center"><?php echo $fila->fecha; ?></td>
+            
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'formato', 'codigo_estructura' => $fila->codigo_estructura)); ?>" title="Ver Detalle"><?php echo $this->img('ico_detalle_2.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'nuevoformato', 'codigo_estructura' => $fila->codigo_estructura)); ?>" title="Agregar Registro"><?php echo $this->img('ico_agregar.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'eliminar', 'codigo_estructura' => $fila->codigo_estructura)); ?>" title="Eliminar"><?php echo $this->img('ico_eliminar.png'); ?></a></td>
+            
+        </tr>
+    <?php
+        endforeach;
+    else: ?>
+            <tr>
+                <td colspan="10" align="center">La consulta no devolvió registros</td>
+            </tr>
+    <?php
+    endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->estructuras):
+       //Zend_Debug::dd($clientes);
+        echo $this->paginationControl($this->estructuras);
+    endif;
+    ?>
+     <br>
+ <br>
+ </fieldset>

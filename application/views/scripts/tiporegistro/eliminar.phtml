@@ -1,0 +1,25 @@
+<br>
+<br>
+<h1 style="text-align: center">ELIMINAR TIPO DE REGISTRO</h1>     
+
+<fieldset>
+    <legend style="font-size: 15px; margin-bottom: -10px;margin-left: 8px ;width: auto;">Eliminar Tipo de Registro</legend>
+    <br><br>
+    <table class="general" summary="Proveedores" style="width:30%">
+    <caption>¿Seguro que desea eliminar?</caption>
+    <tbody>
+    <tr>
+        <th align="center" width="30%">ID:</th>
+        <td align="center"><?php echo $this->escape($this->tiporegistro->id_registro); ?></td>
+    </tr>
+    <tr>
+        <th align="center" width="30%">Tipo de Registro:</th>
+        <td align="center"><?php echo $this->escape($this->tiporegistro->nombre); ?></td>
+    </tr>
+
+    </table>
+    <p align="center">
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'tiporegistro', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'tiporegistro', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'id_registro' => $this->tiporegistro->id_registro), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>
+    </p>
+</fieldset>

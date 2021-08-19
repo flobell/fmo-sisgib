@@ -1,0 +1,127 @@
+<style>
+    #tblProveedores td {
+        text-align: center;
+    }
+</style>
+
+<br>
+<br>
+<h1 style="text-align: center">EDITAR CUENTAS BANCARIAS</h1>
+
+<!-- FORMULARIO DE REGISTRO DE PROVEEDORES -->
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+
+ <!-- DATOS BANCARIOS PROVEEDORES -->   
+<fieldset><br><br>          
+    <table class="general" summary="Datos Del Proveedor" style="width:30%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Datos de Proveedor</legend>
+        <tbody>  
+            <tr>
+                <th style="width: 30%">R.I.F/C.I:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_LETRA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_LETRA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_LETRA)->renderErrors();
+                         ?>
+                </td>
+                <td style="width: 30%"><?php
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_RIF)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_RIF)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_RIF)->renderErrors();
+                             ?>
+                </td>
+            </tr>
+        </tbody>
+    </table><br>
+</fieldset><br><br>
+<fieldset>             
+    <table class="general" summary="Datos Bancarios de Proveedores" style="width:55%" id="tblProveedores">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Datos Bancarios de Proveedores</legend>
+        <tbody>  
+            <tr>
+                <th style="width: 20%">Código del Banco</th><br>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_COD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_COD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_COD)->renderErrors();
+                         ?>
+                </td>             
+                <th style="width: 20%">Tipo de Cuenta</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_TIPOCUENTA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_TIPOCUENTA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_TIPOCUENTA)->renderErrors();
+                             ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+ 
+ <!-- DATOS BANCARIOS DE PROVEEDOR EN TABLA  -->
+ 
+    <table class="general" summary="Datos Bancarios de Proveedores en tabla" style="width:50%">
+        <tbody>  
+            <tr>
+                <th>Cod.</th><br>
+                <th>Banco</th>
+                <th>Numero de Cuenta</th>
+                <th style="width: 10%">Cuenta Activa</th>
+            </tr>
+            <tr>
+                <td align="center" style="width: 10%"><?php 
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_CODTXT)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_CODTXT)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_CODTXT)->renderErrors(); 
+                         ?>
+                </td>
+                <td align="center" style="width: 10%"><?php
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_BANCO)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_BANCO)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_BANCO)->renderErrors();
+                             ?>
+                </td>
+                
+                <td align="center" style="width: 10%"><?php
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_NUMCUENTA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_NUMCUENTA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_NUMCUENTA)->renderErrors();
+                             ?>
+                </td>  
+                <td align="center" style="width: 10%"><?php
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_ACTIVA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_ACTIVA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_ACTIVA)->renderErrors();
+                             ?>
+                </td>
+            </tr>
+    
+        </tbody>
+    </table><br><br>
+     <!-- BOTONES DE GUARDADO Y CANCELAR -->
+    <table style="width: 99%;">
+        <tbody>  
+            <tr>
+                <td style="text-align: right; "><?php
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_GUARDAR)->renderViewHelper();
+                    ?>
+                </td>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_NuevaCuentaBancaria::E_CANCELAR)->renderViewHelper();
+                    ?>
+                </td>
+            </tr>
+        </tbody>  
+    </table><br><br>
+</fieldset>
+ <br>
+ <br>
+
+ 
+ 
+ 
+<?php echo '</form>', PHP_EOL; ?>
+
+ 

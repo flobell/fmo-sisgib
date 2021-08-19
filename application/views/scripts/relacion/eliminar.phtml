@@ -1,0 +1,20 @@
+
+
+<table class="general" summary="Proveedores" style="width:30%">
+<caption>ELIMINAR CAMPO DE RELACIÓN</caption>
+<caption>¿Seguro que desea eliminar?</caption>
+<tbody>
+<tr>
+    <th align="center" width="30%">ID:</th>
+    <td align="center"><?php echo $this->escape($this->relacion->id_relacion); ?></td>
+</tr>
+<tr>
+    <th align="center" width="30%">Campo de Relación:</th>
+    <td align="center"><?php echo $this->escape($this->relacion->nombre); ?></td>
+</tr>
+
+</table>
+<p align="center">
+    <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'relacion', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+    <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'relacion', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'id_relacion' => $this->relacion->id_relacion), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>
+</p>

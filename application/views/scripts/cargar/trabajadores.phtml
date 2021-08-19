@@ -1,0 +1,374 @@
+<br>
+<br>
+<h1 style="text-align: center">REGISTRO INDIVIDUAL DE TRABAJADORES</h1>
+
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+
+<style>
+    #modal {
+    display: none;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 64px;
+    height: 64px;
+    padding: 2.5% 2.5%;
+    border: 3px solid #ababab;
+    box-shadow:1px 1px 10px #ababab;
+    border-radius:20px;
+    background-color: white;
+    z-index: 1002;
+    text-align:center;
+    overflow: auto;
+    }
+</style>
+
+<div id="modal">
+    <?php echo $this->img('spinner.gif', array('alt' => 'spinner.gif', 'width' => '64', 'height' => '64')); ?>
+</div>
+
+ <!-- ENDITADES BANCARIAS -->   
+ 
+<fieldset>             
+    <table class="general" summary="Información de Interfaz" style="width:30%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Información de Interfaz</legend>
+        <tbody>  
+            <tr>
+                <th>Entidad Bancaria</th><br>
+                <td style="width: 5%"><?php
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_COD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_COD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_COD)->renderErrors();
+                         ?>
+                </td>
+                          
+            </tr>
+            
+            <tr>
+                <th style="width: 40%">Titulo de Interfaz</th>
+                <td><?php 
+                   echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_TITULO)->renderViewHelper(),
+                        $this->formulario->getElement(Application_Form_CargarTrabajadores::E_TITULO)->renderDescription(),
+                        $this->formulario->getElement(Application_Form_CargarTrabajadores::E_TITULO)->renderErrors(); 
+                        ?>
+                </td>
+                <?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_FECHA)->renderViewHelper();?>
+             </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+ </fieldset>
+
+ <br>
+ <br>
+ 
+ <!-- DATOS DE INTERFAZ EN TABLA PARA TRABAJADORES -->
+ <fieldset>   
+     
+    <table id="tblMonto" class="general" summary="Monto total" style="width: 20%">
+        <tr >
+            <th class="td-titulo" colspan="4" style="width: 40%">Monto Total</th>
+            <td align="center" >
+                <input name="monto" id="montoText" value="0" size="12" maxlength="3" readonly="readonly" type="text" style="text-align: right;"></input>
+            </td>
+        </tr>
+    </table>
+     
+     
+     <table id="tblTrabajadores" class="general" summary="Datos de Interfaz" style="width:55%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Datos de Interfaz</legend>
+        <caption style="text-align: left">
+            Datos de Trabajadores
+            <a title="Agregar Trabajador" href="javascript: void(0);" onclick="agregarFilaTrabajadores(this)"><?php echo $this->img('ico_agregar.png');?></a>
+            <a title="Eliminar Trabajador" href="javascript:void(0);" onclick="quitarFilaTrabajadores(this)"><?php echo $this->img('ico_eliminar.png');?></a>
+        </caption>
+        <thead>  
+            <tr>
+                <th class="td-titulo">N°</th>
+                <th class="td-titulo">Ficha</th><br>
+                <th class="td-titulo">C.I</th>
+                <th class="td-titulo">Nac.</th>
+                <th class="td-titulo">Nombre</th>
+                <th class="td-titulo">Apellido</th>
+                <th class="td-titulo">No.Cuenta</th>
+                <th class="td-titulo">Tipo de Cuenta</th>
+                <th class="td-titulo">Banco</th>
+                <th class="td-titulo">Monto A Pagar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="td-trabajadores-index" align="center">
+                    <input name="index" id="indexText" value="1" size="2" maxlength="3" readonly="readonly" type="text" style="text-align: center;"></input>
+                </td>
+                <td class="td-trabajadores-ficha"><?php $this->formulario->getElement(Application_Form_CargarTrabajadores::E_FICHA)
+                                ->setAttrib('id', Application_Form_CargarTrabajadores::E_FICHA . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_FICHA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_FICHA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_FICHA)->renderErrors(); 
+                         ?>     
+                </td>
+                <td class="td-trabajadores-cedula"><?php  $this->formulario->getElement(Application_Form_CargarTrabajadores::E_CEDULA)
+                                ->setAttrib('id', Application_Form_CargarTrabajadores::E_CEDULA . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_CEDULA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_CEDULA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_CEDULA)->renderErrors(); 
+                         ?>
+                </td>
+                <td class="td-trabajadores-nac"><?php $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NACIONAL)
+                                ->setAttrib('id', Application_Form_CargarTrabajadores::E_NACIONAL . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NACIONAL)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NACIONAL)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NACIONAL)->renderErrors();
+                             ?>
+                </td>
+                <td class="td-trabajadores-nombre"><?php $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NOMBRE)
+                                ->setAttrib('id', Application_Form_CargarTrabajadores::E_NOMBRE . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NOMBRE)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NOMBRE)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NOMBRE)->renderErrors();
+                             ?>
+                </td>
+                <td class="td-trabajadores-apellido"><?php $this->formulario->getElement(Application_Form_CargarTrabajadores::E_APELLIDO)
+                                ->setAttrib('id', Application_Form_CargarTrabajadores::E_APELLIDO . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_APELLIDO)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_APELLIDO)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_APELLIDO)->renderErrors();
+                             ?>
+                </td> 
+                <td class="td-trabajadores-cuenta"><?php $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NUMEROCUENTA)
+                                ->setAttrib('id', Application_Form_CargarTrabajadores::E_NUMEROCUENTA . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NUMEROCUENTA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NUMEROCUENTA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NUMEROCUENTA)->renderErrors();
+                             ?>
+                </td>
+                <td class="td-trabajadores-tipocuenta"><?php $this->formulario->getElement(Application_Form_CargarTrabajadores::E_TCUENTA)
+                                ->setAttrib('id', Application_Form_CargarTrabajadores::E_TCUENTA . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_TCUENTA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_TCUENTA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_TCUENTA)->renderErrors();
+                             ?>
+                </td>             
+                <td class="td-trabajadores-entidad"><?php $this->formulario->getElement(Application_Form_CargarTrabajadores::E_BANCO)
+                                ->setAttrib('id', Application_Form_CargarTrabajadores::E_BANCO . '1');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_BANCO)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_BANCO)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_BANCO)->renderErrors();
+                             ?>
+                </td>
+                <td class="td-trabajadores-montototal"><?php $this->formulario->getElement(Application_Form_CargarTrabajadores::E_MONTO_TRABAJADORES)
+                                ->setAttrib('id', Application_Form_CargarTrabajadores::E_MONTO_TRABAJADORES . '1')
+                                ->setAttrib('oninput','sumaTotal(this)');
+                
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_MONTO_TRABAJADORES)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_MONTO_TRABAJADORES)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CargarTrabajadores::E_MONTO_TRABAJADORES)->renderErrors();
+                             ?>
+                </td>
+            </tr>
+            </tr>
+    
+        </tbody>
+    </table>
+ <br>
+ <br>
+ <br>
+ </fieldset>
+ 
+ <!-- BOTONES DE GUARDAR Y CANCELAR -->
+ 
+ <table style="width: 99%;">
+        <tbody>  
+            <tr>
+                <td style="text-align: right; "><?php
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_CANCELAR)->renderViewHelper();
+                    ?>
+                </td>
+                
+                <td ><?php
+                    echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_CARGAR)->renderViewHelper();
+                    ?>
+                </td>
+
+            </tr>
+        </tbody>  
+    </table>
+</div>
+
+<?php echo '</form>', PHP_EOL; ?>
+
+
+ <!--Script para numero de trabajadores-->
+<script type="text/javascript">
+    
+    function getDatosFicha(element){
+        var fila = element.id;
+        //console.log(element.id);
+        var txtFicha = $('#'+fila);
+        var ruta = txtFicha.attr("url");
+        $("#cedula"+fila.charAt(fila.length-1)).val("");
+        $("#nombre"+fila.charAt(fila.length-1)).val("");
+        $("#apellido"+fila.charAt(fila.length-1)).val("");
+        $("#nacional"+fila.charAt(fila.length-1)).val("");
+        $("#numerocuenta"+fila.charAt(fila.length-1)).val("");
+        $("#tcuenta"+fila.charAt(fila.length-1)).val("");
+        $("#banco"+fila.charAt(fila.length-1)).val("");
+
+        $.ajax({
+            type: "GET",
+            url: ruta + "/ficha/" + txtFicha.val(),
+            dataType: "json",
+            async: true,
+            beforeSend: function () { $("#modal").show(); },
+            complete: function () { $("#modal").hide(); }, 
+            success: function (ficha) {
+                if(ficha){
+                    $("#cedula"+fila.charAt(fila.length-1)).val(ficha.cedula);
+                    $("#nombre"+fila.charAt(fila.length-1)).val(ficha.nombre);
+                    $("#apellido"+fila.charAt(fila.length-1)).val(ficha.apellido);
+                    $("#nacional"+fila.charAt(fila.length-1)).val(ficha.nacionalidad);
+                    $("#numerocuenta"+fila.charAt(fila.length-1)).val(ficha.numcuenta);
+                    $("#banco"+fila.charAt(fila.length-1)).val(ficha.banco);
+                    $("#tcuenta"+fila.charAt(fila.length-1)).val(ficha.tcuenta);
+                }
+            }
+        });
+    }
+    
+    
+    function validarFila(fila){
+        
+        var table = document.getElementById("tblTrabajadores");
+        
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            
+            if(fila.value != "" && fila.id != row.cells[1].firstElementChild.id && fila.value == row.cells[1].firstElementChild.value){
+                alert("Ficha {"+fila.value+"} ya fue ingresada en la fila {"+row.cells[0].firstElementChild.value+"}");
+                fila.value = "";
+                
+                $("#cedula"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#nombre"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#apellido"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#nacional"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#numerocuenta"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#banco"+fila.id.charAt(fila.id.length-1)).val(null);
+                $("#tcuenta"+fila.id.charAt(fila.id.length-1)).val(null);
+            }
+        }
+        
+    }
+    
+    $("#cargarTip").click(function(event){
+        if(!confirm ("Desea continuar?"))
+           event.preventDefault();
+    });
+    
+    function sumaTotal(){
+       
+        var table = document.getElementById("tblTrabajadores");
+        var total = 0;
+        
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            //iterate through rows
+            //rows would be accessed using the "row" variable assigned in the for loop
+            if(row.cells[9].firstElementChild.value) total+=parseFloat(row.cells[9].firstElementChild.value);
+
+        }
+        
+
+        document.getElementById("montoText").value = total;
+
+        
+    }
+    
+    
+    function agregarFilaTrabajadores() {
+        let tbody      = $('#tblTrabajadores').children('tbody');
+        let fila       = $('#tblTrabajadores tbody').find('tr:first').clone();
+        let ultimaFila = $('#tblTrabajadores tbody').find('tr:last');
+        let ultimoId   = ultimaFila.children('.td-trabajadores-ficha').children('input').attr('id');
+        let nuevoId    = parseInt(ultimoId.replace('<?php echo Application_Form_CargarTrabajadores::E_FICHA; ?>', '')) + 1;
+
+        fila.children('.td-titulo').remove();
+        fila.children('.td-trabajadores-index').remove();
+        fila.children('.td-trabajadores-ficha').remove();
+        fila.children('.td-trabajadores-cedula').remove();
+        fila.children('.td-trabajadores-nac').remove();
+        fila.children('.td-trabajadores-nombre').remove();
+        fila.children('.td-trabajadores-apellido').remove();
+        fila.children('.td-trabajadores-cuenta').remove();
+        fila.children('.td-trabajadores-tipocuenta').remove();
+        fila.children('.td-trabajadores-entidad').remove();
+        fila.children('.td-trabajadores-montototal').remove();
+
+        let childCbo = `<th class="td-titulo">N°</th>
+                        <th class="td-titulo">Ficha</th>
+                        <th class="td-titulo">C.I</th>                        
+                        <th class="td-titulo">Nac.</th>
+                        <th class="td-titulo">Nombre</th>
+                        <th class="td-titulo">Apellido</th>
+                        <th class="td-titulo">No.Cuenta</th>
+                        <th class="td-titulo">Tipo de Cuenta</th>
+                        <th class="td-titulo">Banco</th>
+                        <th class="td-titulo">Monto A Pagar</th> 
+                        <tr>
+                        <td class="td-trabajadores-index"><input name="index" id="indexText" size="2" maxlength="3" readonly="readonly" type="text" style="text-align: center;">
+                        <td class="td-trabajadores-ficha"><?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_FICHA)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_FICHA)->renderDescription(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_FICHA)->renderErrors();?>    
+                        <td class="td-trabajadores-cedula"><?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_CEDULA)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_CEDULA)->renderDescription(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_CEDULA)->renderErrors();?>                        
+                        <td class="td-trabajadores-nac"><?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NACIONAL)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_NACIONAL)->renderDescription(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_NACIONAL)->renderErrors();?>                     
+                        <td class="td-trabajadores-nombre"><?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NOMBRE)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_NOMBRE)->renderDescription(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_NOMBRE)->renderErrors();?>
+                        <td class="td-trabajadores-apellido"><?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_APELLIDO)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_APELLIDO)->renderDescription(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_APELLIDO)->renderErrors();?>
+                        <td class="td-trabajadores-cuenta"><?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_NUMEROCUENTA)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_NUMEROCUENTA)->renderDescription(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_NUMEROCUENTA)->renderErrors();?>
+                        <td class="td-trabajadores-tipocuenta"><?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_TCUENTA)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_TCUENTA)->renderDescription(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_TCUENTA)->renderErrors();?>
+                        <td class="td-trabajadores-entidad"><?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_BANCO)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_BANCO)->renderDescription(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_BANCO)->renderErrors();?>
+                        <td class="td-trabajadores-montototal"><?php echo $this->formulario->getElement(Application_Form_CargarTrabajadores::E_MONTO_TRABAJADORES)->renderViewHelper(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_MONTO_TRABAJADORES)->renderDescription(),$this->formulario->getElement(Application_Form_CargarTrabajadores::E_MONTO_TRABAJADORES)->renderErrors();?>  
+                        </tr>`;
+        
+        fila.prepend(childCbo);
+        fila.children('.td-trabajadores-ficha').children('input').attr('id', '<?php echo Application_Form_CargarTrabajadores::E_FICHA; ?>' + nuevoId);
+        fila.children('.td-trabajadores-cedula').children('input').attr('id', '<?php echo Application_Form_CargarTrabajadores::E_CEDULA; ?>' + nuevoId);
+        fila.children('.td-trabajadores-nac').children('input').attr('id', '<?php echo Application_Form_CargarTrabajadores::E_NACIONAL ?>' + nuevoId);
+        fila.children('.td-trabajadores-nombre').children('input').attr('id', '<?php echo Application_Form_CargarTrabajadores::E_NOMBRE; ?>' + nuevoId);
+        fila.children('.td-trabajadores-apellido').children('input').attr('id', '<?php echo Application_Form_CargarTrabajadores::E_APELLIDO; ?>' + nuevoId);
+        fila.children('.td-trabajadores-cuenta').children('input').attr('id', '<?php echo Application_Form_CargarTrabajadores::E_NUMEROCUENTA; ?>' + nuevoId);
+        fila.children('.td-trabajadores-tipocuenta').children('input').attr('id', '<?php echo Application_Form_CargarTrabajadores::E_TCUENTA; ?>' + nuevoId);
+        fila.children('.td-trabajadores-entidad').children('input').attr('id', '<?php echo Application_Form_CargarTrabajadores::E_BANCO; ?>' + nuevoId);
+        fila.children('.td-trabajadores-montototal').children('input').attr('id', '<?php echo Application_Form_CargarTrabajadores::E_MONTO_TRABAJADORES; ?>' + nuevoId);
+        //tbody.append(fila);
+      
+        var cantFilas = $('#tblTrabajadores tbody tr').length;
+        $('#numtrabajadores').val(cantFilas);
+        fila.children('.td-trabajadores-index').children('input').val(cantFilas+1);
+       
+       if (cantFilas !== 9){
+            tbody.append(fila);
+        }
+       
+    }
+
+    function quitarFilaTrabajadores(anchor) {
+        var cantFilas  = $('#tblTrabajadores tbody tr').length;
+        var ultimaFila = $('#tblTrabajadores tbody').find('tr:last');
+
+        if (cantFilas !== 1) {
+            ultimaFila.remove();
+            $('#numtrabajadores').val($('#tblTrabajadores tbody tr').length);
+        }
+        sumaTotal(this);
+    }
+</script>
+
+ 

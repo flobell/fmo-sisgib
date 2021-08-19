@@ -1,0 +1,101 @@
+<style>
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #333;
+}
+
+h3 {
+    display: block;
+    font-size: 24px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+h4 {
+    display: block;
+    font-size: 20px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+</style>
+
+<h3 style="text-align: center;">CARGA DE TXT PARA LA PAGINA PATRIA</h3>
+<h4 style="text-align: center;">www.patria.org.ve</h4>
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+    <!-- DATOS DE INTERFAZ -->  
+<fieldset>
+
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">ARCHIVO TXT</legend>
+
+    <table align="center" summary="Archivo" style="width: 25%">
+        <thead>
+        </thead>
+        <tbody>
+            <tr>
+                <td ><?php
+                    echo $this->formulario->getElement(Application_Form_PatriaTxt::E_COD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_PatriaTxt::E_COD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_PatriaTxt::E_COD)->renderErrors();
+                         ?>
+                </td>
+                          
+            </tr>
+            
+            <tr>
+                <td><?php echo $this->formulario->getElement(Application_Form_PatriaTxt::E_CLIENTE)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_PatriaTxt::E_CLIENTE)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_PatriaTxt::E_CLIENTE)->renderErrors();
+                         ?></td>
+            </tr>
+            
+            <tr>
+                 <td>
+                    <?php 
+                    echo $this->formulario->getElement(Application_Form_PatriaTxt::E_TITULO)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_PatriaTxt::E_TITULO)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_PatriaTxt::E_TITULO)->renderErrors(); 
+                         ?>
+                 </td>
+            </tr>
+            <tr>
+                <td>
+                    <?php echo $this->formulario->getElement(Application_Form_PatriaTxt::E_FECHA)->renderViewHelper();?>
+                </td>
+            </tr>
+            <tr>
+                <td ><?php echo $this->formulario->getElement(Application_Form_PatriaTxt::E_ARCHIVO);?></td>
+            </tr>
+        </tbody>
+    </table>   
+
+</fieldset>
+
+<!-- BOTONES DE GUARDAR Y CANCELAR -->
+<br>
+
+<table style="width: 99%;">
+    <tbody>  
+        <tr>
+            <td style="text-align: center;" >
+                <?php
+                    echo $this->formulario->getElement(Application_Form_PatriaTxt::E_CARGAR)->renderViewHelper();
+                ?>
+            </td>
+        </tr>
+    </tbody>  
+</table>
+
+<?php echo '</form>', PHP_EOL; ?>

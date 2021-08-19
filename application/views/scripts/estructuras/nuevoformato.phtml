@@ -1,0 +1,199 @@
+<br>
+<br>
+<h1 style="text-align: center">FORMATO DE ESTRUCTURA BANCARIA</h1>
+
+<!-- FORMULARIO DE REGISTRO DE CUENTAS FMO -->
+
+<?php echo $this->formulario->renderForm(false); ?>
+ 
+<!-- TABLAS DE DATOS DE REGISTROS -->
+<fieldset id="datosRegistros"><br>
+     <table class="general" summary="Tipos de Registros" style="width:21%">
+        <tbody> 
+            <tr>
+                <th>Tipos de Registros:</th>             
+                <td>
+                    <?php
+                        $this->formulario->getElement(Application_Form_Formato::E_TIPO_REGISTROS)
+                                ->setAttrib('id', Application_Form_Formato::E_TIPO_REGISTROS . '1');
+                        
+                       echo $this->formulario->getElement(Application_Form_Formato::E_TIPO_REGISTROS)->renderViewHelper(),
+                            $this->formulario->getElement(Application_Form_Formato::E_TIPO_REGISTROS)->renderDescription(),
+                            $this->formulario->getElement(Application_Form_Formato::E_TIPO_REGISTROS)->renderErrors();
+                    ?>
+                </td>
+                <?php  echo $this->formulario->getElement(Application_Form_Formato::E_CODIGO);?>
+                    
+            </tr>
+        </tbody>
+     </table>
+     <table id="tblCampos" class="general" summary="Datos de Registro" style="width: 80%"><br>
+         <caption style="text-align: left">
+            Datos del Formato
+            <a title="Agregar Campo" href="javascript: void(0);" onclick="agregarFilaCampos(this)"><?php echo $this->img('ico_agregar.png');?></a>
+            <a title="Eliminar Campo" href="javascript:void(0);" onclick="quitarFilaCampos(this)"><?php echo $this->img('ico_eliminar.png');?></a>
+        </caption>
+        <thead>
+            <tr>
+                <th class="td-titulo">Campo A Relacionar</th>
+                <th class="td-titulo">Longitud</th>
+                <th class="td-titulo">Tipo de Dato</th>
+                <th class="td-titulo">Pos.Inicial</th>
+                <th class="td-titulo">Pos.Final</th>
+                <th class="td-titulo">Alineación</th>
+                <th class="td-titulo">Operación/Regla</th>
+            </tr>
+        </thead>
+        <tbody>
+            <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Formato de la Estructura</legend>
+            <tr>
+                <td class="td-campos-relacionar" align="center"><?php
+                       $this->formulario->getElement(Application_Form_Formato::E_CAMPO_RELACIONAR)
+                                ->setAttrib('id', Application_Form_Formato::E_CAMPO_RELACIONAR . '1');
+                       
+                       echo $this->formulario->getElement(Application_Form_Formato::E_CAMPO_RELACIONAR)->renderViewHelper(),
+                            $this->formulario->getElement(Application_Form_Formato::E_CAMPO_RELACIONAR)->renderDescription(),
+                            $this->formulario->getElement(Application_Form_Formato::E_CAMPO_RELACIONAR)->renderErrors();
+                    ?>     
+                </td>
+                <td class="td-campos-longitud" align="center"><?php
+                       $this->formulario->getElement(Application_Form_Formato::E_LONGITUD)
+                                ->setAttrib('id', Application_Form_Formato::E_LONGITUD. '1');
+                       
+                       echo $this->formulario->getElement(Application_Form_Formato::E_LONGITUD)->renderViewHelper(),
+                            $this->formulario->getElement(Application_Form_Formato::E_LONGITUD)->renderDescription(),
+                            $this->formulario->getElement(Application_Form_Formato::E_LONGITUD)->renderErrors();
+                    ?>      
+                </td>
+                <td class="td-campos-tipodato" align="center"><?php
+                        $this->formulario->getElement(Application_Form_Formato::E_TIPODATO)
+                                ->setAttrib('id', Application_Form_Formato::E_TIPODATO . '1');
+                        
+                       echo $this->formulario->getElement(Application_Form_Formato::E_TIPODATO)->renderViewHelper(),
+                            $this->formulario->getElement(Application_Form_Formato::E_TIPODATO)->renderDescription(),
+                            $this->formulario->getElement(Application_Form_Formato::E_TIPODATO)->renderErrors();
+                    ?>      
+                </td>               
+                <td class="td-campos-inicial" align="center"><?php
+                            $this->formulario->getElement(Application_Form_Formato::E_INICIO)
+                                ->setAttrib('id', Application_Form_Formato::E_INICIO . '1');
+                            
+                           echo $this->formulario->getElement(Application_Form_Formato::E_INICIO)->renderViewHelper(),
+                                $this->formulario->getElement(Application_Form_Formato::E_INICIO)->renderDescription(),
+                                $this->formulario->getElement(Application_Form_Formato::E_INICIO)->renderErrors();
+                           ?>
+                </td>
+                <td class="td-campos-final" align="center"><?php
+                           $this->formulario->getElement(Application_Form_Formato::E_FIN)
+                                ->setAttrib('id', Application_Form_Formato::E_FIN . '1');
+                           
+                           echo $this->formulario->getElement(Application_Form_Formato::E_FIN)->renderViewHelper(),
+                                $this->formulario->getElement(Application_Form_Formato::E_FIN)->renderDescription(),
+                                $this->formulario->getElement(Application_Form_Formato::E_FIN)->renderErrors();
+                           ?>
+                </td>
+                <td class="td-campos-alineacion" align="center"><?php
+                        $this->formulario->getElement(Application_Form_Formato::E_ALINEACION)
+                                ->setAttrib('id', Application_Form_Formato::E_ALINEACION . '1');
+                        
+                       echo $this->formulario->getElement(Application_Form_Formato::E_ALINEACION)->renderViewHelper(),
+                            $this->formulario->getElement(Application_Form_Formato::E_ALINEACION)->renderDescription(),
+                            $this->formulario->getElement(Application_Form_Formato::E_ALINEACION)->renderErrors();
+                    ?>      
+                </td>
+                <td class="td-campos-operacion" align="center"><?php
+                        $this->formulario->getElement(Application_Form_Formato::E_OPERACION)
+                                ->setAttrib('id', Application_Form_Formato::E_OPERACION . '1');
+                        
+                       echo $this->formulario->getElement(Application_Form_Formato::E_OPERACION)->renderViewHelper(),
+                            $this->formulario->getElement(Application_Form_Formato::E_OPERACION)->renderDescription(),
+                            $this->formulario->getElement(Application_Form_Formato::E_OPERACION)->renderErrors();
+                    ?>      
+                </td> 
+            </tr>
+        </tbody>
+     </table><br>          
+ </fieldset>
+
+
+ 
+ <!-- BOTONES DE GUARDAR Y CANCELAR -->
+ <table style="width: 99%;"><br><br>
+        <tbody>  
+            <tr>
+                <td style="text-align: center">
+                    <?php
+                    echo $this->formulario->getElement(Application_Form_Formato::E_GUARDAR)->renderViewHelper();
+                    ?>
+                    <?php
+                    echo $this->formulario->getElement(Application_Form_Formato::E_CANCELAR)->renderViewHelper();
+                    ?>
+                </td>
+            </tr>
+        </tbody>  
+    </table>
+
+
+<?php echo '</form>', PHP_EOL; ?>
+
+ 
+ <!--Script para numero de campos-->
+<script type="text/javascript">
+    function agregarFilaCampos() {
+        let tbody      = $('#tblCampos').children('tbody');
+        let fila       = $('#tblCampos tbody').find('tr:first').clone();
+        let ultimaFila = $('#tblCampos tbody').find('tr:last');
+        let ultimoId   = ultimaFila.children('.td-campos-relacionar').children('select').attr('id');
+        let nuevoId    = parseInt(ultimoId.replace('<?php echo Application_Form_Formato::E_CAMPO_RELACIONAR; ?>', '')) + 1;
+
+        fila.children('.td-titulo').remove();
+        fila.children('.td-campos-relacionar').remove();
+        fila.children('.td-campos-longitud').remove();
+        fila.children('.td-campos-tipodato').remove();
+        fila.children('.td-campos-inicial').remove();
+        fila.children('.td-campos-final').remove();
+        fila.children('.td-campos-alineacion').remove();
+        fila.children('.td-campos-operacion').remove();
+
+        let childCbo = `<th class="td-titulo">Campo a Relacionar:</th>
+                        <th class="td-titulo">Longitud:</th>                        
+                        <th class="td-titulo">Tipo de Dato:</th>
+                        <th class="td-titulo">Posición:</th>
+                        <th class="td-titulo">Alineación:</th>
+                        <th class="td-titulo">Operación:</th>
+                        <tr>
+                        <td class="td-campos-relacionar" align="center"><?php echo $this->formulario->getElement(Application_Form_Formato::E_CAMPO_RELACIONAR)->renderViewHelper(),$this->formulario->getElement(Application_Form_Formato::E_CAMPO_RELACIONAR)->renderDescription(),$this->formulario->getElement(Application_Form_Formato::E_CAMPO_RELACIONAR)->renderErrors();?>    
+                        <td class="td-campos-longitud" align="center"><?php echo $this->formulario->getElement(Application_Form_Formato::E_LONGITUD)->renderViewHelper(),$this->formulario->getElement(Application_Form_Formato::E_LONGITUD)->renderDescription(),$this->formulario->getElement(Application_Form_Formato::E_LONGITUD)->renderErrors();?>                        
+                        <td class="td-campos-tipodato" align="center"><?php echo $this->formulario->getElement(Application_Form_Formato::E_TIPODATO)->renderViewHelper(),$this->formulario->getElement(Application_Form_Formato::E_TIPODATO)->renderDescription(),$this->formulario->getElement(Application_Form_Formato::E_TIPODATO)->renderErrors();?>                     
+                        <td class="td-campos-inicial" align="center"><?php echo $this->formulario->getElement(Application_Form_Formato::E_INICIO)->renderViewHelper(),$this->formulario->getElement(Application_Form_Formato::E_INICIO)->renderDescription(),$this->formulario->getElement(Application_Form_Formato::E_INICIO)->renderErrors();?>
+                        <td class="td-campos-final" align="center"><?php echo $this->formulario->getElement(Application_Form_Formato::E_FIN)->renderViewHelper(),$this->formulario->getElement(Application_Form_Formato::E_FIN)->renderDescription(),$this->formulario->getElement(Application_Form_Formato::E_FIN)->renderErrors();?>
+                        <td class="td-campos-alineacion" align="center"><?php echo $this->formulario->getElement(Application_Form_Formato::E_ALINEACION)->renderViewHelper(),$this->formulario->getElement(Application_Form_Formato::E_ALINEACION)->renderDescription(),$this->formulario->getElement(Application_Form_Formato::E_ALINEACION)->renderErrors();?>
+                        <td class="td-campos-operacion" align="center"><?php echo $this->formulario->getElement(Application_Form_Formato::E_OPERACION)->renderViewHelper(),$this->formulario->getElement(Application_Form_Formato::E_OPERACION)->renderDescription(),$this->formulario->getElement(Application_Form_Formato::E_OPERACION)->renderErrors();?>
+                        </tr>`;
+        
+        fila.prepend(childCbo);
+        fila.children('.td-campos-relacionar').children('select').attr('id', '<?php echo Application_Form_Formato::E_CAMPO_RELACIONAR; ?>' + nuevoId);
+        fila.children('.td-campos-longitud').children('input').attr('id', '<?php echo Application_Form_Formato::E_LONGITUD; ?>' + nuevoId);
+        fila.children('.td-campos-tipodato').children('select').attr('id', '<?php echo Application_Form_Formato::E_TIPODATO; ?>' + nuevoId);
+        fila.children('.td-campos-inicial').children('input').attr('id', '<?php echo Application_Form_Formato::E_INICIO; ?>' + nuevoId);
+        fila.children('.td-campos-final').children('input').attr('id', '<?php echo Application_Form_Formato::E_FIN; ?>' + nuevoId);
+        fila.children('.td-campos-alineacion').children('select').attr('id', '<?php echo Application_Form_Formato::E_ALINEACION; ?>' + nuevoId);
+        fila.children('.td-campos-operacion').children('select').attr('id', '<?php echo Application_Form_Formato::E_OPERACION; ?>' + nuevoId);
+        tbody.append(fila);
+      
+        var cantFilas = $('#tblCampos tbody tr').length;
+        $('#numcampos').val(cantFilas);
+       
+    }
+
+    function quitarFilaCampos(anchor) {
+        var cantFilas  = $('#tblCampos tbody tr').length;
+        var ultimaFila = $('#tblCampos tbody').find('tr:last');
+
+        if (cantFilas !== 1) {
+            ultimaFila.remove();
+            $('#numcampos').val($('#tblCampos tbody tr').length);
+        }
+    }
+</script>
+

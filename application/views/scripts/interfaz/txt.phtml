@@ -1,0 +1,588 @@
+<?php
+
+//define("UTF-8",1);
+//Zend_Debug::dd('EOL'." = ".defined('PHP_EOL'));
+$sysInfo = new Fmo_SystemInfo();
+//Zend_Debug::dd(strpos($sysInfo->getClientHttpUserAgent(),"Linux"));
+
+if (strpos($sysInfo->getClientHttpUserAgent(),"Window")) {
+    //Zend_Debug::dd("Este sistema es Windows");
+    define('EOL',"\r\n");
+} elseif (strpos($sysInfo->getClientHttpUserAgent(),"Linux")) {
+    //Zend_Debug::dd("Este sistema es Linux");
+    define('EOL',"\n");
+} else {
+    //Zend_Debug::dd($sysInfo->getClientHttpUserAgent());
+    define('EOL',"\n");
+}
+
+//Zend_Debug::dd("PRUEBA".PHP_EOL."SALTO DE LINEA");
+
+/*
+
+ */
+$id = rawurlencode($this->pInterfaz);
+$banco = rawurldecode($this->pCodigo);
+
+//VARIABLES ESTATICAS PARA ESCRITURA EN TXT
+$secuencial = "01";
+$activo = "ACTIVO";
+$fmo= "CVG FERROMINERA ORINOCO, C. A.";
+$conveniodelsur= "11107";
+
+
+// Nombre temporal del archivo.
+$archivo = sys_get_temp_dir() . DIRECTORY_SEPARATOR .$id.'.txt';
+// Apertura del archivo en modo de escritura en el directorio destino
+$fpc = fopen($archivo, 'w+');
+//fwrite($fpc,trim("ESTO ES UNA PRUEBA"));
+
+// IF PARA LAS CABECERAS
+if($this->formato and $this->formato->count()){
+    foreach ($this->formato as $formato){
+        switch ($formato->tipo_registro){
+            case "CONTROL":
+                switch ($banco){
+                    //BANESCO
+                    case '0134':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, 
+                                    $hdr = "HDR".
+                                    $nombrebanco = str_pad("BANESCO", 15, " ", STR_PAD_RIGHT).
+                                    $edifact = "E".
+                                    $version = "D  95B".
+                                    $documento = "PAYMUL".
+                                    $produccion = "P".
+                                    EOL
+                                );
+                                break;
+                                
+                            }
+                        }   
+                    break;     
+                }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
+            case "CABECERA":
+                switch ($banco){
+                    //DELSUR
+                    case '0157':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                if($fila->cliente == "TRABAJADORES"){
+                                        fwrite($fpc, $numconvenio = str_pad($fila->nro_convenio, 8, "0", STR_PAD_LEFT).
+                                        $fecha = substr($fila->fecha, -2)."/".substr($fila->fecha, -5,2)."/".substr($fila->fecha, 0,4)." ".date('H:i:s').
+                                        $cuentafmo = str_pad(substr($fila->cuentafmo,-12),12,"0",STR_PAD_LEFT).
+                                        $total = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 16, "0", STR_PAD_LEFT).
+                                        $formapago = "D".
+                                        $referencia = str_pad(substr($fila->fecha, -2).substr($fila->fecha, -5,2).substr($fila->fecha, 0,4),15,"0",STR_PAD_LEFT).
+                                        $motivo = str_pad("$fila->titulo", 80, " ", STR_PAD_LEFT).
+                                        $registros = str_pad("$fila->numpagos_parte", 6, "0", STR_PAD_LEFT).
+                                        $confidencial = "S".
+                                        EOL
+                                    );
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                        
+                    //BANESCO    
+                    case '0134':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, $tipo_registro = "01".
+                                             $transaccion = str_pad("SCV", 35, " ", STR_PAD_RIGHT).
+                                             $condicion = str_pad("9", 3, " ", STR_PAD_RIGHT).
+                                             $numorden = str_pad(str_replace("-","",$fila->fecha)."A".$fila->id_interfaz, 35, " ", STR_PAD_RIGHT).
+                                             $fecha = str_replace("-","",$fila->fecha).  str_replace(":","",date('H:i:s')).
+                                            EOL          
+                                );
+                                break;
+                                
+                            }
+                        }   
+                    break; 
+                    
+                    //BANCO DE VENEZUELA
+                    case '0102':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                if($fila->cliente == "TRABAJADORES"){
+                                    fwrite($fpc, $identificacion = "H".
+                                                 $empresa = substr(str_pad($fila->razon, 40, " ", STR_PAD_RIGHT),0,40).//$fmo.substr($blancos40, 0, -strlen($fmo)).
+                                                 $cuentafmo = $fila->cuentafmo.
+                                                 $secuencial.
+                                                 $fecha = substr($fila->fecha, -2)."/".substr($fila->fecha, -5,2)."/".substr($fila->fecha, 2,2).
+                                                 $total = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 13, "0", STR_PAD_LEFT).//str_pad(str_replace(".","",$fila->monto_parte), 13, "0", STR_PAD_LEFT).
+                                                 $serial = str_pad("3291", 5, "0", STR_PAD_LEFT).
+                                                 $espacio = " ".
+                                                EOL   
+                                    );
+                                    $secuencial++;
+                                    break;
+                                } else {
+                                    fwrite($fpc, $identificacion = str_pad("HEADER", 8," ",STR_PAD_RIGHT).
+                                            $referencia = str_pad(substr($fila->fecha, -2).substr($fila->fecha, -5,2).$id,8,"0",STR_PAD_LEFT).
+                                            $negociacion = str_pad("20723",8,"0",STR_PAD_LEFT).
+                                            $rif = str_replace("-","",$fila->rif_empresa).
+                                            $fechaPago = substr($fila->fecha, -2)."/".substr($fila->fecha, -5,2)."/".substr($fila->fecha, 0,4).
+                                            $fechaEnvio = substr($fila->fecha, -2)."/".substr($fila->fecha, -5,2)."/".substr($fila->fecha, 0,4).
+                                        EOL   
+                                    );
+                                    break;
+                                    
+                                    
+                                }
+                            }
+                        }
+                        break;
+                        
+                    //BANCO NACIONAL DE CREDITO    
+                    case '0191':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, $tipo = "C".
+                                             $registros = str_pad("$fila->numpagos_parte", 5, "0", STR_PAD_LEFT).//substr($ceros5, 0, -strlen("$fila->numpagos_parte")).$fila->numpagos_parte.
+                                             $total = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 15, "0", STR_PAD_LEFT).//substr($ceros15, 0, -strlen(str_replace(".","",$fila->monto_parte))).str_replace(".","",$fila->monto_parte).
+                                             $numlote = str_pad($secuencial, 10, "0", STR_PAD_LEFT).//substr($ceros10, 0, -strlen("$secuencial")).$secuencial.
+                                             $rechazo = "S".
+                                             $enviar = "N".
+                                             $verificar = "N".
+                                             $firma = "00".
+                                            EOL   
+                                );
+                                $secuencial++;
+                                break;
+                            }
+                        }
+                        break;
+                        
+                    //BANCO BICENTENARIO (0175)    
+                    case '0175';
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, $fila->cuentafmo.
+                                             $fecha = str_replace("-","",$fila->fecha).
+                                             $total = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 17, "0", STR_PAD_LEFT).//substr($ceros17, 0, -strlen(str_replace(".","",$fila->monto_parte))).str_replace(".","",$fila->monto_parte).
+                                             $registros = str_pad("$fila->numpagos_parte", 4, "0", STR_PAD_LEFT).
+                                            EOL
+                                             
+                                );
+                                break;
+                            }
+                        }
+                        break;
+                        
+                    //BANCO BICENTENARIO (0174)    
+                    case '0174';
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, $fila->cuentafmo.
+                                             $fecha = str_replace("-","",$fila->fecha).
+                                             $total = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 17, "0", STR_PAD_LEFT).//substr($ceros17, 0, -strlen(str_replace(".","",$fila->monto_parte))).str_replace(".","",$fila->monto_parte).
+                                             $registros = str_pad("$fila->numpagos_parte", 4, "0", STR_PAD_LEFT).
+                                            EOL 
+                                             
+                                );
+                                break;
+                            }
+                        }
+                        break;
+
+                    //PATRIA
+                    case '0001';
+                    if ($this->txt and $this->txt->count()){
+                        foreach ($this->txt as $fila) {
+                            fwrite($fpc, 
+                                $identificacion = "ONTNOM".                                       
+                                $rif="J001005420".  
+                                $operaciones = str_pad($fila->numpagos_parte, 7, "0", STR_PAD_LEFT).
+                                $total = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 15, "0", STR_PAD_LEFT).
+                                $moneda = "VES".
+                                $fecha = str_replace("-","",$fila->fecha).
+                                EOL
+                            );
+                            break;
+                        }
+                    }
+                    break;
+                        
+                }//FIN SWITCH 2
+               
+                
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
+            
+            case "DETALLE":
+                switch ($banco){
+                    //PATRIA
+                    case '0001';
+                    if ($this->txt and $this->txt->count()){
+                        foreach ($this->txt as $fila) {
+                            fwrite($fpc, 
+                                $letra = $fila->nacionalidad.                                       
+                                $rif = str_pad($fila->rif, 8, "0", STR_PAD_LEFT).  
+                                $numcuenta = $fila->numcuenta.
+                                $monto = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 11, "0", STR_PAD_LEFT).
+                                $nombre = str_pad(substr($fila->nombre, 0, 40), 40, " ", STR_PAD_RIGHT).
+                                EOL
+                            );
+                        }
+                    }
+                    break;
+
+                    //DELSUR
+                    case '0157':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                if($fila->cliente == "TRABAJADORES"){
+                                    fwrite($fpc, $codigoempresa = str_pad($fila->nro_empresa, 4, "0", STR_PAD_LEFT).
+                                                 $rif = str_pad("$fila->rif", 10, "0", STR_PAD_LEFT).
+                                                 $numcuenta = substr($fila->numcuenta,-10).
+                                                 $monto = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 16, "0", STR_PAD_LEFT).
+                                                 $transaccion = "C".
+                                                 $numconvenio = str_pad($fila->nro_convenio, 8, "0", STR_PAD_LEFT).
+                                                 $nombre = substr(str_pad($fila->nombre, 24, " ", STR_PAD_LEFT), 0, 24).
+                                                EOL
+                                                 //cadena "nombre" cortada a los 30 caracteres.
+                                    );
+                                }else{
+                                    fwrite($fpc, $fila->nacionalidad.
+                                                 $rif = str_pad("$fila->rif", 15, " ", STR_PAD_RIGHT).
+                                                 $numcuenta = $fila->numcuenta.
+                                                 $monto = sstr_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 15, "0", STR_PAD_LEFT).
+                                                 $referencia = "000000000000000".
+                                                 $correo = str_pad($fila->correo, 51, " ", STR_PAD_RIGHT).
+                                                 $nombre = substr(str_pad($fila->nombre, 44, " ", STR_PAD_RIGHT), 0, 44).
+                                                EOL 
+
+                                        );
+                                } 
+                            }
+                        }
+                        break;
+                    //CARONI
+                    case '0128':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, $fila->nacionalidad.
+                                             $rif = str_pad($fila->rif, 9, "0", STR_PAD_LEFT).
+                                             $nombre= substr(str_pad($fila->nombre, 41, " ", STR_PAD_RIGHT),0,41).
+                                             $fila->numcuenta.
+                                             $monto = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 14, "0", STR_PAD_LEFT).
+                                            EOL 
+                                );
+                                
+                            }
+                        }
+                        
+                        break;
+                    //VENEZUELA    
+                    case '0102':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                if($fila->tipo_cuenta == "01"){ 
+                                    $tipocuenta = 1;
+                                }else{
+                                    $tipocuenta = 0;
+                                } 
+                                
+                                if($fila->cliente == "TRABAJADORES"){
+                                    fwrite($fpc, $tipocuenta.
+                                                $nrocuenta = $fila->numcuenta.
+                                                $monto = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 11, "0", STR_PAD_LEFT).
+                                                $tipocuenta."770".
+                                                $nombre = substr(str_pad($fila->nombre, 40, " ", STR_PAD_RIGHT),0,40).
+                                                $rif = str_pad("$fila->rif", 10, "0", STR_PAD_LEFT).
+                                                $serial = str_pad("3291", 6, "0", STR_PAD_LEFT).
+                                                $espacio = "  ".
+                                                EOL                   
+                                    );
+                                } 
+                              
+                            }
+                        }
+                        break;
+                        
+                    //BNC
+                    case '0191':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, $tipo = "D".
+                                             $fecha = substr($fila->fecha, -2).substr($fila->fecha, -5,2).substr($fila->fecha, 0,4).
+                                             $fila->cuentafmo.
+                                             $fila->numcuenta.
+                                             $monto = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 15, "0", STR_PAD_LEFT).//substr($ceros11, 0, -strlen(str_replace(".","",$fila->monto))).str_replace(".","",$fila->monto).
+                                             $descripcion = str_pad($fila->titulo, 60, " ", STR_PAD_RIGHT).
+                                             $fila->nacionalidad.
+                                             $rif = str_pad("$fila->rif", 9, "0", STR_PAD_LEFT).//substr($ceros9, 0, -strlen("$fila->rif")).$fila->rif.
+                                             $nombre = substr(str_pad($fila->nombre, 80, " ", STR_PAD_RIGHT),0,80).
+                                             $correo = str_pad($fila->correo, 100, " ", STR_PAD_RIGHT).
+                                             $refcliente = "REFCLIENTE". 
+                                            EOL
+                                );
+                                
+                            }
+                        }
+                        break;   
+                        
+                    //BANCO ACTIVO
+                    case '0171':
+                         if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, $fila->nacionalidad.
+                                             $rif = str_pad("$fila->rif", 10, "0", STR_PAD_LEFT).//substr($ceros10, 0, -strlen("$fila->rif")).$fila->rif.";".
+                                             $fila->nombre.";".
+                                             $fila->numcuenta.";".
+                                             $activo.";".
+                                             $fila->telefono.
+                                             $fila->telefono_celular.";".
+                                             $fila->correo.
+                                             $fila->correo_electronico.";".
+                                             $accion="A".
+                                            EOL
+                                       
+                                );
+                                
+                            }
+                        }
+                        break;
+                        
+                    //BANCO BICENTENARIO (0175)
+                    case '0175';
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, "1457".
+                                             $monto = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 12, "0", STR_PAD_LEFT).//substr($ceros12, 0, -strlen(str_replace(".","",$fila->monto))).str_replace(".","",$fila->monto).
+                                             $fila->numcuenta.
+                                             $rif = str_pad("$fila->rif", 10, "0", STR_PAD_LEFT).//substr($ceros10, 0, -strlen("$fila->rif")).$fila->rif.
+                                             $filler = str_pad("", 5, "0", STR_PAD_LEFT).//
+                                             $proceso = "1".
+                                             $filler = str_pad("",2,0,STR_PAD_LEFT).
+                                            EOL
+                                             
+                                             
+                                );
+                                
+                            }
+                        }
+                        break;
+                        
+                    //BANCO BICENTENARIO (0174)
+                    case '0174';
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, "1457".
+                                             $monto = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 12, "0", STR_PAD_LEFT).//substr($ceros12, 0, -strlen(str_replace(".","",$fila->monto))).str_replace(".","",$fila->monto).
+                                             $fila->numcuenta.
+                                             $rif = str_pad("$fila->rif", 10, "0", STR_PAD_LEFT).//substr($ceros10, 0, -strlen("$fila->rif")).$fila->rif.
+                                             $filler = str_pad("", 5, "0", STR_PAD_LEFT).//
+                                             $proceso = "1".
+                                             $filler = str_pad("",2,0,STR_PAD_LEFT).
+                                            EOL
+                                             
+                                             
+                                );
+                                
+                            }
+                        }
+                        break;
+                }//FIN SWITCH 2
+                
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
+            case "DEBITO":
+                switch ($banco){
+                    //BANESCO
+                    case '0134':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, $tipo_registro = "02".
+                                             $numrefdebito = str_pad(substr($fila->fecha, -2).substr($fila->fecha, -5,2).substr($fila->fecha, 0,4),30," ",STR_PAD_RIGHT).
+                                             $rifFMO = str_pad($fila->rif_empresa,17," ", STR_PAD_RIGHT).
+                                             $fmo = str_pad($fila->razon,35," ", STR_PAD_RIGHT).
+                                             $total = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 15, "0", STR_PAD_LEFT).
+                                             $moneda = "VES".
+                                             $filler = " ".
+                                             $cuentadmo = str_pad($fila->cuentafmo, 34, " ", STR_PAD_RIGHT).
+                                             $nombrebanco = str_pad("BANESCO", 11, " ", STR_PAD_RIGHT).str_replace("-","",$fila->fecha).
+                                            EOL //$fecha = str_replace("-","",$fila->fecha).PHP_EOL      
+                                );
+                                break;
+                                
+                            }
+                        }
+                        break;
+                        
+                    //VENEZUELA
+                    case '0102':
+                        if ($this->txt and $this->txt->count()){
+                            $contador = 1;
+                            foreach ($this->txt as $fila) {
+                                if($fila->cliente == "PROVEEDORES"){
+                                    if($fila->tipo_cuenta == "01"){ 
+                                        $tipocuenta = 1;
+                                    }else{
+                                        $tipocuenta = 0;
+                                    } 
+
+                                    fwrite($fpc, $identificador = str_pad("DEBITO", 8," ",STR_PAD_RIGHT).
+                                                $referencia = str_pad($contador,8,"0",STR_PAD_LEFT).
+                                                $rif = str_replace("-","",$fila->rif_empresa).
+                                                $nombre = substr(str_pad($fila->razon, 35, " ", STR_PAD_RIGHT), 0, 35).
+                                                $fecha = substr($fila->fecha, -2) . "/" . substr($fila->fecha, -5, 2) . "/" . substr($fila->fecha, 0, 4).
+                                                str_pad($tipocuenta,2,"0",STR_PAD_LEFT).
+                                                $nrocuenta = $fila->cuentafmo.
+                                                $monto = str_pad(str_replace(".",",",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 18, "0", STR_PAD_LEFT).
+                                                $moneda = "VEB".
+                                                $tipopago = str_pad("40",3," ",STR_PAD_RIGHT).
+                                                EOL //$fecha = str_replace("-","",$fila->fecha).PHP_EOL      
+                                    );
+                                    $contador++;
+                                    
+                                }
+                                break;
+                                
+                            }
+                        }
+                        break;    
+                }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
+            case "CREDITO":
+                switch ($banco){
+                    //BANESCO
+                    case '0134':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                $numero=1;
+                                if(substr($fila->numcuenta, 0, 4) != "0134"){
+                                        fwrite($fpc, $tipo_registro = "03".
+                                                     $numrecibo = str_pad(str_pad("$numero", 8, "0", STR_PAD_LEFT),30," ", STR_PAD_RIGHT).
+                                                     $monto = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 15, "0", STR_PAD_LEFT).
+                                                     $moneda = "VES".
+                                                     $numcuenta = str_pad($fila->numcuenta, 30, " ", STR_PAD_RIGHT).
+                                                     $sudeban = str_pad(substr($fila->numcuenta, 0, 4), 11, " ", STR_PAD_RIGHT).
+                                                     $rif = str_pad($fila->nacionalidad.str_pad($fila->rif, 9, "0", STR_PAD_LEFT),17," ",STR_PAD_RIGHT).
+                                                     $nombre = str_pad($fila->nombre, 70, " ", STR_PAD_RIGHT).
+                                                     $formapago = "425".
+                                                    EOL
+                                               );
+                                        $numero++;
+                                    }else{
+                                        fwrite($fpc, $tipo_registro = "03".
+                                                     $numrecibo = str_pad(str_pad("$numero", 8, "0", STR_PAD_LEFT),30," ", STR_PAD_RIGHT).
+                                                     $monto = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto,2)))), 15, "0", STR_PAD_LEFT).
+                                                     $moneda = "VES".
+                                                     $numcuenta = str_pad($fila->numcuenta, 30, " ", STR_PAD_RIGHT).
+                                                     $sudeban = str_pad(substr($fila->numcuenta, 0, 4), 11, " ", STR_PAD_RIGHT).
+                                                     $rif = str_pad($fila->nacionalidad.str_pad($fila->rif, 9, "0", STR_PAD_LEFT),17," ",STR_PAD_RIGHT).
+                                                     $nombre = str_pad($fila->nombre, 70, " ", STR_PAD_RIGHT).
+                                                     $formapago = str_pad("42", 206, " ", STR_PAD_LEFT).
+                                                    EOL
+                                               );
+                                        $numero++;
+                                    }       
+                                
+                            }
+                        }
+                        break;
+                        
+                        //VENEZUELA
+                        case '0102':
+                            if ($this->txt and $this->txt->count()){
+                                $contador = 1;
+                                foreach ($this->txt as $fila) {
+                                    if($fila->cliente == "PROVEEDORES"){
+                                        if($fila->tipo_cuenta == "01"){ 
+                                            $tipocuenta = 1;
+                                        }else{
+                                            $tipocuenta = 0;
+                                        } 
+
+
+                                        fwrite($fpc, $identificador = str_pad("CREDITO", 8," ",STR_PAD_RIGHT).
+                                                    $referencia = str_pad(strval($contador),8,"0",STR_PAD_LEFT).
+                                                    $rif = $fila->nacionalidad.str_pad($fila->rif,9,"0",STR_PAD_LEFT).
+                                                    $nombre = substr(str_pad($fila->nombre, 30, " ", STR_PAD_RIGHT), 0, 30).
+                                                    $tipoCuenta = str_pad($tipocuenta,2,"0",STR_PAD_LEFT).
+                                                    $nrocuenta = $fila->numcuenta.
+                                                    $monto = str_pad(str_replace(".",",",str_replace(",","",strval(number_format($fila->monto,2)))), 18, "0", STR_PAD_LEFT).
+                                                    $tipopago = str_pad("",2," ",STR_PAD_RIGHT).
+                                                    $swift = str_pad("",12," ",STR_PAD_RIGHT).
+                                                    $duracion = str_pad("",3," ",STR_PAD_RIGHT).
+                                                    $agencia = str_pad("",4," ",STR_PAD_RIGHT).
+                                                    $email = str_pad("",50," ",STR_PAD_RIGHT).
+                                                    EOL //$fecha = str_replace("-","",$fila->fecha).PHP_EOL      
+                                        );
+                                        $contador++;
+                                    }
+
+                                }
+                            }
+                            break;
+                        
+                }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////                
+            case "TOTALES":
+                switch ($banco){
+                    //BANESCO
+                    case '0134':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                fwrite($fpc, $tipo_registro = "06".
+                                                 $debitos = str_pad("01", 15, "0", STR_PAD_LEFT).
+                                                 $creditos = str_pad($fila->numpagos_parte, 15, "0", STR_PAD_LEFT).
+                                                 $total = str_pad(str_replace(".","",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 15, "0", STR_PAD_LEFT).
+                                            EOL 
+                                    );
+                                break;
+                                
+                                
+                            }
+                        }
+                        break;
+                        
+                    //VENEZUELA
+                    case '0102':
+                        if ($this->txt and $this->txt->count()){
+                            foreach ($this->txt as $fila) {
+                                if($fila->cliente == "PROVEEDORES"){    
+                                    fwrite($fpc, $identificador = str_pad("TOTAL", 8," ",STR_PAD_RIGHT).
+                                                     $cantDebitos = str_pad($fila->numpagos_parte, 5, "0", STR_PAD_LEFT).
+                                                     $cantCreditos = str_pad("1", 5, "0", STR_PAD_LEFT).
+                                                     $total = str_pad(str_replace(".",",",str_replace(",","",strval(number_format($fila->monto_parte,2)))), 18, "0", STR_PAD_LEFT).
+                                                EOL 
+                                        );
+                                }
+                                break;  
+                            }
+                        }
+                        break;    
+                }  
+                
+        }//FIN SWITCH 1
+        break;
+    }//FIN FOREACH
+}//FIN IF
+
+fclose($fpc);
+
+//Esto es para computadoras con windows, para eliminar ultima linea vacia
+if (strpos($sysInfo->getClientHttpUserAgent(),"Window")){   
+    //se obtiene un arreglo del archivo
+    $lines = file($archivo);
+    //se escribe el arreglo como un string sin la ultima linea
+    $fp = fopen($archivo, 'w');
+    fwrite($fp, rtrim(implode('', $lines)));
+    fclose($fp);
+}
+
+header("Content-Type: text/plain; charset=UTF-8", true);
+header("Content-disposition: attachment; filename=\"$this->titulo.txt\"", true);
+header('Cache-Control: public, must-revalidate, max-age=0', true);
+//header('Content-Length: ' . filesize($output), true);
+header('Pragma: public', true);
+header('Expires: Sat, 26 Jul 1997 05:00:00 GMT', true);
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT', true);
+ob_clean();
+readfile($archivo);
+?>

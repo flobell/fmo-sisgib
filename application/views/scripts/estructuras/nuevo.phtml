@@ -1,0 +1,129 @@
+<br>
+<br>
+<h1 style="text-align: center">ESTRUCTURAS BANCARIAS</h1>
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+ <!-- SELECCION DE BANCO -->   
+<fieldset>             
+    <table class="general" summary="Seleccion de banco" style="width:30%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Nueva Estructura Bancaria</legend>
+        <tbody>  
+            <tr>
+                <th style="width: 40%">Código del Banco</th><br>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_Estructuras::E_COD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_Estructuras::E_COD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_Estructuras::E_COD)->renderErrors();
+                         ?>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <table class="general" summary="Datos Estructuras" style="width:40%">
+           <tbody>
+               <tr>
+                   <th style="width: 35%">Titulo Estructura:</th>
+                   <td><?php
+                       echo $this->formulario->getElement(Application_Form_Estructuras::E_TITULO)->renderViewHelper(),
+                            $this->formulario->getElement(Application_Form_Estructuras::E_TITULO)->renderDescription(),
+                            $this->formulario->getElement(Application_Form_Estructuras::E_TITULO)->renderErrors();
+                                ?>
+                   </td>
+                   <th style="width: 20%">Fecha:</th>
+                   <td>
+                   <?php echo $this->formulario->getElement(Application_Form_Estructuras::E_FECHA)->renderViewHelper(),
+                              $this->formulario->getElement(Application_Form_Estructuras::E_FECHA)->renderDescription(),
+                              $this->formulario->getElement(Application_Form_Estructuras::E_FECHA)->renderErrors();?>
+                   </td>
+               </tr>
+           </tbody>
+    </table><br>
+    <table id="tblRegistros" class="general" summary="Tipos de registros" style="width: 15%">
+            <thead>
+                <tr>
+                    <th class="td-titulo">Tipos de Registros: 
+                        <a title="Agregar Registro" href="javascript: void(0);" onclick="agregarFila(this)"><?php echo $this->img('ico_agregar.png');?></a>
+                        <a title="Eliminar Registro" href="javascript:void(0);" onclick="quitarFila(this)"><?php echo $this->img('ico_eliminar.png');?></a>
+                    </th>  
+                </tr>
+            </thead>
+        <tbody> 
+            <tr>
+                <td align="center" class="td-registros">
+                    <?php
+                        $this->formulario->getElement(Application_Form_Estructuras::E_TIPO_REGISTROS)
+                                ->setAttrib('id', Application_Form_Estructuras::E_TIPO_REGISTROS . '1');
+                        
+                       echo $this->formulario->getElement(Application_Form_Estructuras::E_TIPO_REGISTROS)->renderViewHelper(),
+                            $this->formulario->getElement(Application_Form_Estructuras::E_TIPO_REGISTROS)->renderDescription(),
+                            $this->formulario->getElement(Application_Form_Estructuras::E_TIPO_REGISTROS)->renderErrors();
+                    ?>
+                </td>
+            </tr>
+        </tbody>
+    </table><br>
+ </fieldset>
+ <br>
+ 
+
+      <!-- BOTONES DE GUARDAR Y CANCELAR -->
+    <table style="width: 99%;"><br><br>
+        <tbody>  
+            <tr>
+                <td style="text-align: center">
+                    <?php
+                    echo $this->formulario->getElement(Application_Form_Estructuras::E_GUARDAR)->renderViewHelper();
+                    ?>
+                    <?php
+                    echo $this->formulario->getElement(Application_Form_Estructuras::E_CANCELAR)->renderViewHelper();
+                    ?>
+                </td>
+            </tr>
+        </tbody>  
+    </table>
+ </fieldset>
+
+<?php echo '</form>', PHP_EOL; ?>
+
+<script type="text/javascript">
+    function agregarFila() {
+        let tbody      = $('#tblRegistros').children('tbody');
+        let fila       = $('#tblRegistros tbody').find('tr:first').clone();
+        let ultimaFila = $('#tblRegistros tbody').find('tr:last');
+        let ultimoId   = ultimaFila.children('.td-registros').children('select').attr('id');
+        let nuevoId    = parseInt(ultimoId.replace('<?php echo Application_Form_Formato::E_TIPO_REGISTROS; ?>', '')) + 1;
+
+        fila.children('.td-titulo').remove();
+        fila.children('.td-registros').remove();
+
+
+        let childCbo = `<th class="td-titulo">Tipos de Registros:</th>
+                        <tr>
+                        <td class="td-registros" align="center"><?php echo $this->formulario->getElement(Application_Form_Estructuras::E_TIPO_REGISTROS)->renderViewHelper(),$this->formulario->getElement(Application_Form_Formato::E_TIPO_REGISTROS)->renderDescription(),$this->formulario->getElement(Application_Form_Formato::E_TIPO_REGISTROS)->renderErrors();?>    
+                        </tr>`;
+        
+        fila.prepend(childCbo);
+        fila.children('.td-registros').children('select').attr('id', '<?php echo Application_Form_Estructuras::E_TIPO_REGISTROS; ?>' + nuevoId);
+        tbody.append(fila);
+      
+        var cantFilas = $('#tblRegistros tbody tr').length;
+        $('#numregistros').val(cantFilas);
+       
+    }
+
+    function quitarFila(anchor) {
+        var cantFilas  = $('#tblRegistros tbody tr').length;
+        var ultimaFila = $('#tblRegistros tbody').find('tr:last');
+
+        if (cantFilas !== 1) {
+            ultimaFila.remove();
+            $('#numregistros').val($('#tblRegistros tbody tr').length);
+        }
+    }
+</script>
+
+

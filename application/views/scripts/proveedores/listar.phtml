@@ -1,0 +1,68 @@
+<style>
+    th {
+        text-align: center;
+    }
+</style>
+
+<br>
+<br>
+<h1 style="text-align: center">LISTADO DE PROVEEDORES</h1>
+<br><br>  
+<fieldset><br>
+    <table class="general" summary="Listado de Proveedores">
+    <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Listado de Proveedores</legend>
+        <thead>
+            <tr>
+                <th width="10%">C.I/R.I.F</th>
+                <th>Nacionalidad</th>
+                <th>Razon Social</th>
+                <th>Representante Legal</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Correo Electrónico</th>
+                <th>Fecha</th>
+                <th width="10%" colspan="4">Acción</th>
+            </tr>
+        </thead>
+    <tbody>
+<?php
+
+if ($this->proveedores and $this->proveedores->count()):
+    foreach ($this->proveedores as $fila): ?>
+        <tr>
+           
+            <td align="center"><?php echo $fila->rif; ?></td>
+            <td align="center"><?php echo $fila->nacionalidad; ?></td>
+            <td align="center"><?php echo $fila->razon; ?></td>
+            <td align="center"><?php echo $fila->representante; ?></td>
+            <td align="center"><?php echo $fila->telefono; ?></td>
+            <td align="center"><?php echo $fila->direccion; ?></td>
+            <td align="center"><?php echo $fila->correo; ?></td>
+            <td align="center"><?php echo Fmo_Util::stringToZendDate($fila->fecha)->get('dd/MM/yyyy'); ?></td>
+
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'nuevacuenta', 'rif' => $fila->rif, 'nacionalidad' => $fila->nacionalidad)); ?>" title="Agregar Nueva Cuenta Bancaria"><?php echo $this->img('ico_agregar.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'detalle', 'rif' => $fila->rif, 'nacionalidad' => $fila->nacionalidad)); ?>" title="Ver Detalle"><?php echo $this->img('ico_detalle_2.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'editar', 'rif' => $fila->rif));?>" title="Editar"><?php echo $this->img('ico_editar.png'); ?></a></td>
+            <td width="5%" align="center"><a href="<?php echo $this->url(array('action' => 'eliminar', 'rif' => $fila->rif)); ?>" title="Eliminar"><?php echo $this->img('ico_eliminar.png'); ?></a></td>
+        </tr>
+    <?php
+        endforeach;
+    else: ?>
+            <tr>
+                <td colspan="10" align="center">La consulta no devolvió registros</td>
+            </tr>
+    <?php
+    endif; ?>
+        </tbody>
+    </table>
+    <?php
+    if ($this->proveedores):
+       //Zend_Debug::dd($clientes);
+        echo $this->paginationControl($this->proveedores);
+    endif;
+    ?>
+ </fieldset>
+ <br>
+ <br>
+ <br>
+ <br>

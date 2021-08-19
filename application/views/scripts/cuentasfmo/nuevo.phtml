@@ -1,0 +1,207 @@
+<script language="javascript">
+    
+    function getDatosBanco(){
+        var txtCodigo = $('#cod');
+        var ruta = txtCodigo.attr('url');
+        $('#codtxt').val('');
+        $('#banco').val('');
+        $('#bcv').val('');
+        $('#numcuenta').val('');
+
+        $.ajax({
+            type: 'GET',
+            url: ruta + '/bancos/' + txtCodigo.val(),
+            dataType: 'json',
+            async: true,
+            beforeSend: function () { $("#modal").show(); },
+            complete: function () { $("#modal").hide(); }, 
+            success: function (bancos) {
+                if(bancos){               
+                    $('#codtxt').val(bancos.codigo);
+                    $('#banco').val(bancos.nombre_banco);
+                    $('#bcv').val(bancos.bcv);
+                    $('#numcuenta').val(bancos.bcv);
+                }
+            }
+        });
+    }
+
+</script>
+
+<style>
+    #modal {
+    display: none;
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 64px;
+    height: 64px;
+    padding: 2.5% 2.5%;
+    border: 3px solid #ababab;
+    box-shadow:1px 1px 10px #ababab;
+    border-radius:20px;
+    background-color: white;
+    z-index: 1002;
+    text-align:center;
+    overflow: auto;
+    }
+</style>
+
+<div id="modal">
+    <?php echo $this->img('spinner.gif', array('alt' => 'spinner.gif', 'width' => '64', 'height' => '64')); ?>
+</div>
+
+
+
+<br>
+<br>
+<h1 style="text-align: center">REGISTRO DE CUENTAS A DEBITAR</h1>
+
+<!-- FORMULARIO DE REGISTRO DE CUENTAS A DEBITAR -->
+
+<?php echo $this->formulario->renderForm(false); ?>
+
+<fieldset><br>             
+    <table class="general" summary="Datos de la Cuenta a Debitar" style="width:30%">
+       <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Cuentas Bancarias a Debitar</legend>
+        <tbody>  
+            <tr>
+                <th style="width: 40%">R.I.F</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_RIF)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_RIF)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_RIF)->renderErrors();
+                             ?>
+                </td>
+                 <th style="width: 40%">Razón Social:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_RAZON)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_RAZON)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_RAZON)->renderErrors();
+                    ?>
+                </td>
+                <!--Numero de convenio asignado por el banco-->
+                     <th style="width: 40%">Número de Convenio:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_CONVE)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_CONVE)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_CONVE)->renderErrors();
+                    ?>
+                </td>
+            <!--código de empresa asignado por el banco-->
+                     <th style="width: 40%">Código Empresa:</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_CODEMPRESA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_CODEMPRESA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_CODEMPRESA)->renderErrors();
+                    ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+</fieldset><br><br><br>  
+
+
+ <!-- DATOS BANCARIOS DE CUENTAS A DEBITAR -->   
+ 
+<fieldset>             
+    <table class="general" summary="Datos Bancarios de Cuentas a Debitar" style="width:55%">
+        <legend style="font-size: 15px; margin-bottom: 0px;margin-left: 8px ;width: auto;">Datos Bancarios de Cuentas a Debitar</legend>
+        <tbody>  
+            <tr>
+                <th style="width: 20%">Entidad Bancaria</th><br>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_COD)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_COD)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_COD)->renderErrors();
+                         ?>
+                </td>
+                
+                <th style="width: 20%">Tipo de Cuenta</th>
+                <td><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_TIPOCUENTA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_TIPOCUENTA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_TIPOCUENTA)->renderErrors();
+                             ?>
+                </td>
+            </tr>
+        </tbody>
+    </table><br>
+
+ 
+ <!-- DATOS BANCARIOS DE CUENTAS A DEBITAR EN TABLA  -->             
+    <table class="general" summary="Datos Bancarios de Cuentas a Debitar en tabla" style="width:55%">
+        <tbody>  
+            <tr>
+                <th>Cod.</th><br>
+                <th>Banco</th>
+                <th>BCV</th>
+                <th>Numero de Cuenta</th>
+                <th style="width: 10%">Cuenta Activa</th>
+            </tr>
+            <tr>
+                <td style="width: 10%"><?php 
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_CODTXT)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_CODTXT)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_CODTXT)->renderErrors(); 
+                         ?>
+                </td>
+                <td style="width: 10%"><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_BANCO)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_BANCO)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_BANCO)->renderErrors();
+                             ?>
+                </td>
+                <td style="width: 10%"><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_BCV)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_BCV)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_BCV)->renderErrors();
+                             ?>
+                </td>
+                <td style="width: 10%"><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_NUMCUENTA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_NUMCUENTA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_NUMCUENTA)->renderErrors();
+                             ?>
+                </td>
+                <?php echo $this->formulario->getElement(Application_Form_CuentasFMO::E_FECHA)?>
+               
+                <td align="center"><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_ACTIVA)->renderViewHelper(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_ACTIVA)->renderDescription(),
+                         $this->formulario->getElement(Application_Form_CuentasFMO::E_ACTIVA)->renderErrors();
+                             ?>
+                </td>
+            </tr>
+    
+        </tbody>
+    </table><br>
+ </fieldset>
+ <br>
+ <br>
+
+ 
+ 
+ <!-- BOTONES DE GUARDAR Y CANCELAR -->
+ 
+    <table style="width: 99%;">
+        <tbody>  
+            <tr>
+                <td style="text-align: right; "><?php
+                    echo $this->formulario->getElement(Application_Form_CuentasFMO::E_CANCELAR)->renderViewHelper();
+                    
+                    ?>
+                </td>
+                <td><?php
+                   echo $this->formulario->getElement(Application_Form_CuentasFMO::E_GUARDAR)->renderViewHelper();
+                    ?>
+                </td>
+            </tr>
+        </tbody>  
+    </table>
+</div>
+
+<?php echo '</form>', PHP_EOL; ?>
+
+

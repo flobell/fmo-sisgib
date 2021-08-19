@@ -1,0 +1,38 @@
+<br>
+<br>
+<h1 style="text-align: center">ELIMINAR ESTRUCTURAS BANCARIAS</h1>
+
+<fieldset>
+    <legend style="font-size: 15px; margin-bottom: -10px;margin-left: 8px ;width: auto;">Eliminar Estructura</legend>
+     <br><br>
+    <table class="general" summary="Estructuras Bancarias" style="width:40%">
+    <caption>¿Seguro que desea eliminar?</caption>
+    <tbody>
+    <tr>
+        <th align="center" width="20%">Código:</th>
+        <td align="center"><?php echo $this->escape($this->estructuras->codigo_estructura); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Titulo:</th>
+        <td align="center"><?php echo $this->escape($this->estructuras->titulo); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Codigo Banco:</th>
+        <td align="center"><?php echo $this->escape($this->estructuras->codigo_banco); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Usuario:</th>
+        <td align="center"><?php echo $this->escape($this->estructuras->usuario); ?></td>
+    </tr>
+    <tr>
+        <th align="center">Fecha:</th>
+        <td align="center"><?php echo $this->escape($this->estructuras->fecha); ?></td>
+    </tr>
+
+
+    </table>
+    <p align="center">
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'estructuras', 'action' => 'listar', 'page' => $this->page), null, true); ?>"><?php echo $this->img('ico_volver.png'); ?> Volver</a>
+        <a class="button" href="<?php echo $this->url(array('module' => 'default', 'controller' => 'estructuras', 'action' => 'eliminar', 'confirmar' => 'S', 'page' => $this->page, 'codigo_estructura' => $this->estructuras->codigo_estructura), null, true); ?>"><?php echo $this->img('ico_eliminar.png'); ?> Eliminar</a>
+    </p>
+</fieldset>
